@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FormikSample } from '@/app/FormikSample';
 
 export default function Home() {
   return (
@@ -107,6 +108,8 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
+
+        <FormikSample />
       </div>
     </main>
   );
