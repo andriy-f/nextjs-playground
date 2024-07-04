@@ -22,11 +22,13 @@ const FormikWithCustomComponents: React.FC = () => {
 				{(formik) => (
 					<Form className='text-center p-12'>
 						<FormikCustomInput
+							id='fms-name'
 							label='name'
 							name='name'
 						/>
 
 						<FormikCustomSelect
+							id='fms-choice'
 							label='choice'
 							name='choice'
 						>
