@@ -48,3 +48,13 @@ const getCircumference = (shape: Shape2D) => {
 		return 2 * (shape.side1 + shape.side2)
 	}
 }
+
+export type PersonChoiceState = {
+	// errors?: {
+	// 	name?: string
+	// 	choice?: string
+	// 	count?: string
+	// }
+	errors?: string[]
+	message?: string
+}

@@ -4,7 +4,9 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import FormikCustomInput from '@/app/formik/FormikCustomInput'
-import FormikCustomSelect from './FormikCustomSelect'
+import FormikCustomSelect from '@/app/formik/FormikCustomSelect'
+import { addPersonChoice2 } from '@/actions'
+import { useFormState } from 'react-dom'
 
 const FormikWithCustomComponents: React.FC = () => {
 	return (
@@ -13,10 +15,12 @@ const FormikWithCustomComponents: React.FC = () => {
 			<Formik
 				initialValues={{
 					name: '',
-					choice: ''
+					choice: '',
+					count: ''
 				}}
 				onSubmit={(data) => {
 					console.log('submitting', data)
+					addPersonChoice2(data)
 				}}
 			>
 				{(formik) => (
@@ -36,6 +40,12 @@ const FormikWithCustomComponents: React.FC = () => {
 							<option value='one'>One</option>
 							<option value='two'>Two</option>
 						</FormikCustomSelect>
+
+						<FormikCustomInput
+							id='fms-count'
+							label='Count'
+							name='count'
+						/>
 
 						<button type='submit'>Submit</button>
 					</Form>

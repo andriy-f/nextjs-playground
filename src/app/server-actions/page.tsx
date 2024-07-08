@@ -1,9 +1,9 @@
 import React from 'react'
-import ServerFormSample from '@/app/server-side-forms/ServerFormSample'
+import ClientFormSample from '@/app/server-actions/ClientFormSample'
 
 const Page: React.FC = () => {
 	return (<>
-		<ServerFormSample />
+		<ClientFormSample />
 	</>)
 }
 
