@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prisma": "prisma"
-
   },
   "dependencies": {
+    "@prisma/client": "^5.16.2",
     "formik": "^2.4.6",
     "next": "^14.2.4",
     "prisma": "^5.16.2",
