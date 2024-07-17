@@ -43,17 +43,15 @@ export const addPersonChoice = async (formData: FormData) => {
 export const addPersonChoice3 = async (prevState: PersonChoiceState, formData: FormData): Promise<PersonChoiceState> => {
 	try {
 		const pcParsed = await personChoiceSchema.validate(Object.fromEntries(formData.entries()))
-		console.log('dummy saving person choice', pcParsed)
 		return {
+			message: 'OK: dummy saving person choice 3 Done'
 		}
 	} catch (e) {
 		if (e instanceof yup.ValidationError) {
-			console.log('dummy saving person validation error', e)
 			return {
 				errors: e.errors
 			}
 		} else {
-			console.log('dummy saving person error', e)
 			return {
 				message: 'dummy saving person error'
 			}
@@ -64,18 +62,15 @@ export const addPersonChoice3 = async (prevState: PersonChoiceState, formData: F
 export const addPersonChoice2 = async (data: unknown): Promise<PersonChoiceState> => {
 	try {
 		const pcParsed = await personChoiceSchema.validate(data)
-		console.log('dummy saving person choice 2', pcParsed)
 		return {
 			message: 'OK: dummy saving person choice 2 Done'
 		}
 	} catch (e) {
 		if (e instanceof yup.ValidationError) {
-			console.log('ERROR dummy saving person validation failed', e)
 			return {
 				errors: e.errors
 			}
 		} else {
-			console.log('ERROR dummy saving person error', e)
 			return {
 				errors: ['ERROR dummy saving person']
 			}
