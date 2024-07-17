@@ -62,7 +62,7 @@ const FormikCustomInput: React.FC<Props> = ({ label, ...props }) => {
 				{...field}
 				{...props} />
 			{meta.touched && meta.error ? (
-				<div className='error'>{meta.error}</div>
+				<div className='text-red-600'>{meta.error}</div>
 			) : null}
 		</div>
 	);

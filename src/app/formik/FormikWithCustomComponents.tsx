@@ -3,25 +3,38 @@
 
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
+import * as yup from 'yup'
 // import { useFormState } from 'react-dom'
 import FormikCustomInput from '@/app/formik/FormikCustomInput'
 import FormikCustomSelect from '@/app/formik/FormikCustomSelect'
 import { addPersonChoice2 } from '@/actions'
 import { PersonChoiceState } from '@/types'
 
+const validationSchema = yup.object({
+	name: yup.string().min(1).required(),
+	choice: yup.string().oneOf(['one', 'two']).required(),
+	count: yup.number().required()
+})
 
 const FormikWithCustomComponents: React.FC = () => {
 	const [formState, setFormState] = useState<PersonChoiceState>({})
 	const [generalError, setGeneralError] = useState<string | null>(null)
 	return (
 		<div>
-			<h2 className='text-2xl text-center'>Formik with custom components</h2>
+			<h2 className='text-xl text-center'>Formik with custom components</h2>
+			<div
+				className='mb-5 dark:text-gray-400'
+			>
+				Features client-side plus server-side validation
+			</div>
+
 			<Formik
 				initialValues={{
 					name: '',
 					choice: '',
 					count: ''
 				}}
+				validationSchema={validationSchema}
 				onSubmit={(data) => {
 					console.log('submitting', data)
 					// here (when calling addPersonChoice2) happens AJAX request to server 
@@ -56,15 +69,20 @@ const FormikWithCustomComponents: React.FC = () => {
 							label='Count'
 							name='count'
 						/>
-						{formState && formState.errors && formState.errors.map(e => (
-							<div key={e} className='text-red-500'>{e}</div>
-						))}
+						{formState && formState.errors && <div className='mb-5'>
+							{formState.errors.map(e => (
+								<div key={e} className='text-red-500'>{e}</div>
+							))}
+						</div>
+						}
 
 						{formState.message && <div className='text-green-500'>{formState.message}</div>}
 
-						{generalError && <div className='text-red-500'>{generalError}</div>}
+						{generalError && <div className='text-red-500 mb-4'>{generalError}</div>}
 
-						<button type='submit'>Submit</button>
+						<button
+							className='rounded-md p-2.5 dark:bg-gray-800 dark:text-white'
+							type='submit'>Submit</button>
 					</Form>
 				)}
 			</Formik>
