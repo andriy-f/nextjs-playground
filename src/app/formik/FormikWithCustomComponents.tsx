@@ -23,7 +23,7 @@ const FormikWithCustomComponents: React.FC = () => {
 		<div>
 			<h2 className='text-xl text-center'>Formik with custom components</h2>
 			<div
-				className='mb-5 dark:text-gray-400'
+				className='mb-5 dark:text-gray-400 text-center'
 			>
 				Features client-side plus server-side validation
 			</div>
@@ -81,7 +81,7 @@ const FormikWithCustomComponents: React.FC = () => {
 						{generalError && <div className='text-red-500 mb-4'>{generalError}</div>}
 
 						<button
-							className='rounded-md p-2.5 dark:bg-gray-800 dark:text-white'
+							className='rounded-md p-2.5 dark:bg-gray-500 border-2 dark:border-gray-300'
 							type='submit'>Submit</button>
 					</Form>
 				)}
