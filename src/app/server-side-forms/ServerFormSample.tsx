@@ -13,11 +13,11 @@ const ServerFormSample = () => {
 
 			<label className='block'>
 				Name
-				<input className='text-black' type="text" name='name' />
+				<input type="text" name='name' />
 			</label>
 			<label className='block'>
 				Choice
-				<select className='text-black' name='choice'>
+				<select name='choice'>
 					<option value=''>Select one</option>
 					<option value='one'>One</option>
 					<option value='two'>Two</option>
@@ -25,7 +25,7 @@ const ServerFormSample = () => {
 			</label>
 			<label className='block'>
 				Count
-				<input className='text-black' type="text" name='count' />
+				<input type="text" name='count' />
 			</label>
 			<button type='submit'>Submit</button>
 		</form>
