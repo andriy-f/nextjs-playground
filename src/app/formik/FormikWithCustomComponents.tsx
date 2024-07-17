@@ -81,7 +81,7 @@ const FormikWithCustomComponents: React.FC = () => {
 						{generalError && <div className='text-red-500 mb-4'>{generalError}</div>}
 
 						<button
-							className='rounded-md p-2.5 dark:bg-gray-500 border-2 dark:border-gray-300'
+							className='mt-2 box-border rounded-md p-2.5 dark:bg-gray-500 border-2 border-solid hover:border-solid hover:border-2 hover:border-white outline outline-2 -outline-offset-2 outline-white hover:outline-offset-8 hover:outline-transparent hover:transition-all ease-in-out'
 							type='submit'>Submit</button>
 					</Form>
 				)}
