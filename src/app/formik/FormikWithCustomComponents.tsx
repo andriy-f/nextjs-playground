@@ -1,14 +1,18 @@
 
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
+import { useFormState } from 'react-dom'
+import { set } from 'zod'
 import FormikCustomInput from '@/app/formik/FormikCustomInput'
 import FormikCustomSelect from '@/app/formik/FormikCustomSelect'
 import { addPersonChoice2 } from '@/actions'
-import { useFormState } from 'react-dom'
+import { PersonChoiceState } from '@/types'
 
 const FormikWithCustomComponents: React.FC = () => {
+	const [formState, setFormState] = useState<PersonChoiceState>({})
+	const [generalError, setGeneralError] = useState<string | null>(null)
 	return (
 		<div>
 			<h2 className='text-2xl text-center'>Formik with custom components</h2>
@@ -20,7 +24,13 @@ const FormikWithCustomComponents: React.FC = () => {
 				}}
 				onSubmit={(data) => {
 					console.log('submitting', data)
-					addPersonChoice2(data)
+					// here (when calling addPersonChoice2) happens AJAX request to server 
+					// because addPersonChoice2 is server action
+					!(async () => {
+						const addResult = await addPersonChoice2(data)
+						setFormState(addResult)
+					})().catch(e => { setGeneralError(e.message) })
+
 				}}
 			>
 				{(formik) => (
@@ -46,6 +56,13 @@ const FormikWithCustomComponents: React.FC = () => {
 							label='Count'
 							name='count'
 						/>
+						{formState && formState.errors && formState.errors.map(e => (
+							<div key={e} className='text-red-500'>{e}</div>
+						))}
+
+						{formState.message && <div className='text-green-500'>{formState.message}</div>}
+
+						{generalError && <div className='text-red-500'>{generalError}</div>}
 
 						<button type='submit'>Submit</button>
 					</Form>

@@ -10,7 +10,7 @@ const FormikCustomSelect: React.FC<FieldAttributes<any>> = ({ label, ...props })
 				htmlFor={props.id || props.name}
 			>{label}</label>
 			<select
-				className='text-black p-2'
+				className='p-2'
 				{...field}
 				{...props} />
 			{meta.touched && meta.error ? (

@@ -58,7 +58,7 @@ const FormikCustomInput: React.FC<Props> = ({ label, ...props }) => {
 				className='block'
 				htmlFor={props.id || props.name}>{label}</label>
 			<input
-				className='rounded-md text-black p-2'
+				className='rounded-md p-2'
 				{...field}
 				{...props} />
 			{meta.touched && meta.error ? (

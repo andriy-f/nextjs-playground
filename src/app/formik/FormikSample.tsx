@@ -28,7 +28,6 @@ export const FormikSample = () => {
     <div>
       <form onSubmit={formik.handleSubmit} >
         <input
-          className='text-black'
           name="name"
           value={formik.values.name}
           onChange={formik.handleChange}
@@ -38,7 +37,6 @@ export const FormikSample = () => {
           {formik.touched.name && formik.errors.name}
         </div>
         <input
-          className='text-black'
           name="storageAmountGB"
           type="number"
           value={formik.values.storageAmountGB}

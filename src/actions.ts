@@ -1,6 +1,5 @@
 'use server'
 
-import { count } from 'console'
 import * as yup from 'yup'
 import { PersonChoiceState } from '@/types'
 
@@ -62,7 +61,24 @@ export const addPersonChoice3 = async (prevState: PersonChoiceState, formData: F
 	}
 }
 
-export const addPersonChoice2 = async (data: unknown) => {
-	const pcParsed = await personChoiceSchema.validate(data)
-	console.log('dummy saving person choice 2', pcParsed)
+export const addPersonChoice2 = async (data: unknown): Promise<PersonChoiceState> => {
+	try {
+		const pcParsed = await personChoiceSchema.validate(data)
+		console.log('dummy saving person choice 2', pcParsed)
+		return {
+			message: 'OK: dummy saving person choice 2 Done'
+		}
+	} catch (e) {
+		if (e instanceof yup.ValidationError) {
+			console.log('ERROR dummy saving person validation failed', e)
+			return {
+				errors: e.errors
+			}
+		} else {
+			console.log('ERROR dummy saving person error', e)
+			return {
+				errors: ['ERROR dummy saving person']
+			}
+		}
+	}
 }
