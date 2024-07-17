@@ -12,18 +12,21 @@
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-end-rgb: 70, 70, 70;
   }
+}
+
+input, select {
+  background: rgb(var(--background-start-rgb));
+  color: rgb(var(--foreground-rgb));
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to top,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  height: 100vh;
 }
 
 @layer utilities {
