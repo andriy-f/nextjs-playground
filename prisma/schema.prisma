@@ -17,4 +17,11 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+  tags  UserTag[]
+}
+
+model UserTag {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
 }
