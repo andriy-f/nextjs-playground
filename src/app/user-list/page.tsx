@@ -1,7 +1,8 @@
 import React from 'react'
-import { PrismaClient } from '@prisma/client'
+// import { PrismaClient } from '@prisma/client'
+import prisma from '@/db'
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
 
 function Th(props: React.PropsWithChildren) {
 	return (
@@ -16,6 +17,7 @@ function Td(props: React.PropsWithChildren) {
 }
 
 export default async function Page() {
+	console.log(process.env.NODE_ENV)
 	const users = await prisma.user.findMany();
 
 	return (
