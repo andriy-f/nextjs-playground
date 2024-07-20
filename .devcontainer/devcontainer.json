@@ -19,6 +19,19 @@
 
 	// Configure tool-specific properties.
 	// "customizations": {},
+	"customizations": {
+    // Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"bradlc.vscode-tailwindcss",
+				"GitHub.copilot",
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	},
+  
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	"remoteUser": "root"
