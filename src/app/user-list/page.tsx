@@ -17,7 +17,6 @@ function Td(props: React.PropsWithChildren) {
 }
 
 export default async function Page() {
-	console.log(process.env.NODE_ENV)
 	const users = await prisma.user.findMany();
 
 	return (
