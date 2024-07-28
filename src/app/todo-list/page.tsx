@@ -1,8 +1,5 @@
 import React from 'react'
-// import { PrismaClient } from '@prisma/client'
 import prisma from '@/db'
-
-// const prisma = new PrismaClient()
 
 function Th(props: React.PropsWithChildren) {
 	return (
@@ -17,7 +14,7 @@ function Td(props: React.PropsWithChildren) {
 }
 
 export default async function Page() {
-	const users = await prisma.user.findMany();
+	const todos = await prisma.todo.findMany();
 
 	return (
 		<div className='flex flex-col items-center justify-center h-screen'>
@@ -27,16 +24,16 @@ export default async function Page() {
 					<thead>
 						<tr>
 							<Th>ID</Th>
-							<Th>Name</Th>
-							<Th>Email</Th>
+							<Th>Title</Th>
+							<Th>Done</Th>
 						</tr>
 					</thead>
 					<tbody>
-						{users.map((user) => (
+						{todos.map((user) => (
 							<tr key={user.id}>
 								<Td>{user.id}</Td>
-								<Td>{user.name}</Td>
-								<Td>{user.email}</Td>
+								<Td>{user.title}</Td>
+								<Td>{user.done}</Td>
 							</tr>
 						))}
 					</tbody>

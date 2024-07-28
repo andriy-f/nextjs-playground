@@ -6,7 +6,7 @@ const NavLinks = [
 	{ href: "/formik", label: "Formik samples", description: "Formik form samples" },
 	{ href: "/server-side-forms", label: "Server side forms", description: "Server side forms" },
 	{ href: "/server-actions", label: "Client forms", description: "Client side forms" },
-	{ href: "/user-list", label: "User list", description: "User list samples with add-delete" },
+	{ href: "/todo-list", label: "Todo list", description: "Todo list" },
 ];
 
 export default function Home() {
