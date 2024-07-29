@@ -58,3 +58,12 @@ export type PersonChoiceState = {
 	errors?: string[]
 	message?: string
 }
+
+export interface AddTodoFormValues {
+	title: string;
+}
+
+export interface Todo extends AddTodoFormValues {
+	id: string
+	done: boolean
+}

@@ -1,5 +1,7 @@
 import React from 'react'
+
 import prisma from '@/db'
+import AddTodo from '@/app/todo-list/AddTodo';
 
 function Th(props: React.PropsWithChildren) {
 	return (
@@ -18,7 +20,8 @@ export default async function Page() {
 
 	return (
 		<div className='flex flex-col items-center justify-center h-screen'>
-			<h1 className='text-4xl font-bold'>User List</h1>
+			<h1 className='text-4xl font-bold'>Todos</h1>
+			<AddTodo />
 			<div className='mt-5'>
 				<table className='table-auto'>
 					<thead>
