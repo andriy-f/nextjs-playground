@@ -7,7 +7,7 @@ import { Formik, Form } from 'formik'
 import FormikCustomInput from '@/components/FormikCustomInput'
 import FormikCustomSelect from '@/components/FormikCustomSelect'
 import { addPersonChoice2 } from './actions'
-import { lifePaths, personProps, PersonSaveResult, personValidationSchema } from '@/app/person/types'
+import { lifePaths, Person, personProps, PersonSaveResult, personValidationSchema } from '@/app/person/types'
 
 
 const FormikWithCustomComponents: React.FC = () => {
@@ -19,11 +19,20 @@ const FormikWithCustomComponents: React.FC = () => {
 	const ageId = useId()
 
 	// TODO: this initial values are invalid compared to validation schema
-	const initialValues = {
+	// todo with this it's not working but no error
+	// const initialValues = {
+	// 	name: '',
+	// 	shape: '',
+	// 	count: ''
+	// }
+
+	// this is working
+	const initialValues: Person = {
 		name: '',
-		shape: '',
-		count: ''
+		lifePath: 'bhakti',
+		age: 10
 	}
+
 	return (
 		<div>
 			<h2 className='text-xl text-center'>Formik with custom components</h2>

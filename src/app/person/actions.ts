@@ -3,16 +3,7 @@ import * as yup from 'yup'
 
 import { PersonSaveResult, personValidationSchema } from "./types"
 
-export type Person = {
-    first: string
-    last: string
-}
-
-export const addPerson = async (person: Person) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-}
-
-export type PersonChoice = {
+export type PersonServerSide = {
     name: string
     shape: string
     count: number
