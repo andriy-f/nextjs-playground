@@ -13,7 +13,7 @@ export type PersonSaveResult = {
 
 export const lifePaths = ['bhakti', 'karma', 'jnana', 'bhukti', 'mukti'] as const
 
-export type LifePath = typeof lifePaths
+export type LifePath = typeof lifePaths[number]
 
 export const personValidationSchema = yup.object({
     name: yup.string().min(1).required(),
