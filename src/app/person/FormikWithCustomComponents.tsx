@@ -18,20 +18,27 @@ const FormikWithCustomComponents: React.FC = () => {
 	const lifePathId = useId()
 	const ageId = useId()
 
-	// TODO: this initial values are invalid compared to validation schema
-	// todo with this it's not working but no error
+	// this initial values are invalid compared to validation schema
+	// with this it's not working but no error
 	// const initialValues = {
 	// 	name: '',
 	// 	shape: '',
 	// 	count: ''
 	// }
 
-	// this is working
-	const initialValues: Person = {
+	// this is working, default values
+	const initialValues = {
 		name: '',
-		lifePath: 'bhakti',
-		age: 10
+		lifePath: '',
+		age: ''
 	}
+
+	// this is working, strict type checking
+	// const initialValues: Person = {
+	// 	name: '',
+	// 	lifePath: 'bhakti',
+	// 	age: 10
+	// }
 
 	return (
 		<div>
