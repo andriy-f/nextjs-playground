@@ -3,31 +3,20 @@
 
 import React, { useState, useId } from 'react'
 import { Formik, Form } from 'formik'
-import * as yup from 'yup'
-import FormikCustomInput from '@/app/formik/FormikCustomInput'
-import FormikCustomSelect from '@/app/formik/FormikCustomSelect'
-import { addPersonChoice2 } from '@/actions'
-import { PersonChoiceState, propertiesOf, propertyOf, proxiedPropertiesOf, shapeChoices, shapeChoicesMap } from '@/types'
 
-const validationSchema = yup.object({
-	name: yup.string().min(1).required(),
-	shape: yup.string().oneOf(shapeChoices).required(),
-	count: yup.number().required()
-})
+import FormikCustomInput from '@/components/FormikCustomInput'
+import FormikCustomSelect from '@/components/FormikCustomSelect'
+import { addPersonChoice2 } from './actions'
+import { lifePaths, personProps, PersonSaveResult, personValidationSchema } from '@/app/person/types'
 
-type FormDataType = yup.InferType<typeof validationSchema>
-
-const getFormDataPropName = propertiesOf<FormDataType>()
-
-const formDataProps = proxiedPropertiesOf<FormDataType>()
 
 const FormikWithCustomComponents: React.FC = () => {
-	const [formState, setFormState] = useState<PersonChoiceState>({})
+	const [formState, setFormState] = useState<PersonSaveResult>({})
 	const [generalError, setGeneralError] = useState<string | null>(null)
 
 	const nameId = useId()
-	const shapeId = useId()
-	const countId = useId()
+	const lifePathId = useId()
+	const ageId = useId()
 
 	// TODO: this initial values are invalid compared to validation schema
 	const initialValues = {
@@ -46,7 +35,7 @@ const FormikWithCustomComponents: React.FC = () => {
 
 			<Formik
 				initialValues={initialValues}
-				validationSchema={validationSchema}
+				validationSchema={personValidationSchema}
 				onSubmit={async (formData) => {
 					console.log('submitting', formData)
 					// here (when calling addPersonChoice2) happens AJAX request to server 
@@ -68,26 +57,24 @@ const FormikWithCustomComponents: React.FC = () => {
 						<FormikCustomInput
 							id={nameId}
 							label='Name'
-							name={formDataProps.name}
+							name={personProps.name}
 						/>
 
 						<FormikCustomSelect
-							id={shapeId}
-							label='Shape'
-							// name={propertyOf<FormDataType>('shape')}
-							// name={formDataProps('shape')}
-							name={formDataProps.shape}
+							id={lifePathId}
+							label='LifePath'
+							name={personProps.lifePath}
 						>
 							<option value=''>Select one</option>
-							{shapeChoices.map((shape) => (
-								<option key={shape} value={shape}>{shapeChoicesMap[shape].name}</option>
+							{lifePaths.map((lifePath) => (
+								<option key={lifePath} value={lifePath}>{lifePath}</option>
 							))}
 						</FormikCustomSelect>
 
 						<FormikCustomInput
-							id={countId}
-							label='Count'
-							name={formDataProps.count}
+							id={ageId}
+							label='Age'
+							name={personProps.age}
 						/>
 
 						{formState && formState.errors && <div className='mb-5'>
@@ -103,7 +90,8 @@ const FormikWithCustomComponents: React.FC = () => {
 
 						<button
 							className='mt-2 box-border rounded-md p-2.5 dark:bg-gray-500 border-2 border-solid hover:border-solid hover:border-2 hover:border-white outline outline-2 -outline-offset-2 outline-white hover:outline-offset-8 hover:outline-transparent hover:transition-all ease-in-out'
-							type='submit'>Submit</button>
+							type='submit'
+						>Submit</button>
 					</Form>
 				)}
 			</Formik>

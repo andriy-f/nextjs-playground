@@ -2,11 +2,11 @@
 
 import React from 'react'
 import { useFormState } from 'react-dom'
-import { addPersonChoice3 } from '@/actions'
-import { PersonChoiceState } from '@/types'
+import { addPersonChoice3 } from '@/app/person/actions'
+import { PersonSaveResult } from '@/app/person/types'
 
 const ClientFormSample = () => {
-	const [state, formAction] = useFormState<PersonChoiceState, FormData>(addPersonChoice3, {})
+	const [state, formAction] = useFormState<PersonSaveResult, FormData>(addPersonChoice3, {})
 	return (
 		<form action={formAction}>
 
@@ -38,9 +38,9 @@ const ClientFormSample = () => {
 			<div>
 				{state.message && <div className='text-red-600'>Message: {state.message}</div>}
 			</div>
-			<button 
-			  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
-			type='submit'>Submit</button>
+			<button
+				className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
+				type='submit'>Submit</button>
 		</form>
 	)
 }

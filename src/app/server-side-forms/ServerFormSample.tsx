@@ -1,7 +1,7 @@
 'use server'
 
 import React from 'react'
-import { addPersonChoice } from '@/actions'
+import { addPersonChoice } from '@/app/person/actions'
 
 const ServerFormSample = () => {
 	return (

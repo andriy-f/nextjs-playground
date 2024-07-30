@@ -68,16 +68,6 @@ const getCircumference = (shape: Shape2D) => {
 	}
 }
 
-export type PersonChoiceState = {
-	// errors?: {
-	// 	name?: string
-	// 	choice?: string
-	// 	count?: string
-	// }
-	errors?: string[]
-	message?: string
-}
-
 export interface AddTodoFormValues {
 	title: string;
 }

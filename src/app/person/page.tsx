@@ -1,6 +1,6 @@
 import React from 'react'
 
-import FormikWithCustomComponents from '@/app/formik/FormikWithCustomComponents'
+import FormikWithCustomComponents from '@/app/person/FormikWithCustomComponents'
 
 const Page: React.FC = () => {
     return (

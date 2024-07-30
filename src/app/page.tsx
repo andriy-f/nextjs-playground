@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from 'next/link'
-import MyCaption from "./components/MyCaption";
+import MyCaption from "../components/MyCaption";
 
 const NavLinks = [
-	{ href: "/formik", label: "Formik samples", description: "Formik form samples" },
+	{ href: "/person", label: "Person", description: "Person sample with Formik" },
 	{ href: "/server-side-forms", label: "Server side forms", description: "Server side forms" },
 	{ href: "/server-actions", label: "Client forms", description: "Client side forms" },
 	{ href: "/todo-list", label: "Todo list", description: "Todo list" },
