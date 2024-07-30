@@ -31,6 +31,25 @@ const getArea = (shape: Shape2D) => {
 	}
 }
 
+export const shapeChoicesMap = {
+	circle: {
+		name: 'Circle',
+		creator: () => ({ type: 'circle', radius: 1 } as Circle),
+	},
+	rectangle: {
+		name: 'Rectangle',
+		creator: () => ({ type: 'rectangle', side1: 1, side2: 2 } as Rectangle),
+	},
+	square: {
+		name: 'Square',
+		creator: () => ({ type: 'square', side: 1 } as Square),
+	},
+}
+
+export type ShapeChoices = keyof typeof shapeChoicesMap
+
+export const shapeChoices = Object.keys(shapeChoicesMap) as ShapeChoices[]
+
 const isCircle = (shape: Shape2D) => {
 	return shape.type === 'circle'
 }
@@ -66,4 +85,26 @@ export interface AddTodoFormValues {
 export interface Todo extends AddTodoFormValues {
 	id: string
 	done: boolean
+}
+
+
+export function propertyOf<TObj>(name: keyof TObj) {
+	return name;
+}
+
+export function propertiesOf<TObj>(_obj: (TObj | undefined) = undefined) {
+	return function result<T extends keyof TObj>(name: T) {
+		return name;
+	}
+}
+
+export function proxiedPropertiesOf<TObj>(obj?: TObj) {
+	return new Proxy({}, {
+		get: (_, prop) => prop,
+		set: () => {
+			throw Error('Set not supported');
+		},
+	}) as {
+			[P in keyof TObj]: P;
+		};
 }

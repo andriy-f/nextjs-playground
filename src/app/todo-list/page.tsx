@@ -15,6 +15,8 @@ function Td(props: React.PropsWithChildren) {
 	);
 }
 
+type ThOrTdReactComponent = typeof Th | typeof Td
+
 export default async function Page() {
 	const todos = await prisma.todo.findMany();
 

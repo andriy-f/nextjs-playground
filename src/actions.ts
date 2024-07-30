@@ -1,7 +1,7 @@
 'use server'
 
 import * as yup from 'yup'
-import { PersonChoiceState } from '@/types'
+import { PersonChoiceState, shapeChoices } from '@/types'
 
 export type Person = {
 	first: string
@@ -14,15 +14,17 @@ export const addPerson = async (person: Person) => {
 
 export type PersonChoice = {
 	name: string
-	choice: string
+	shape: string
 	count: number
 }
 
 const personChoiceSchema = yup.object({
 	name: yup.string().min(2).required(),
-	choice: yup.string().oneOf(['one', 'two']).required(),
+	shape: yup.string().oneOf(shapeChoices).required(),
 	count: yup.number().required()
 })
+
+type PersonChoiceType = yup.InferType<typeof personChoiceSchema>
 
 // not working as server action
 export const addPersonChoice = async (formData: FormData) => {

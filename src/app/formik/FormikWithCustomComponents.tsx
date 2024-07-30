@@ -1,24 +1,40 @@
 
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useId } from 'react'
 import { Formik, Form } from 'formik'
 import * as yup from 'yup'
-// import { useFormState } from 'react-dom'
 import FormikCustomInput from '@/app/formik/FormikCustomInput'
 import FormikCustomSelect from '@/app/formik/FormikCustomSelect'
 import { addPersonChoice2 } from '@/actions'
-import { PersonChoiceState } from '@/types'
+import { PersonChoiceState, propertiesOf, propertyOf, proxiedPropertiesOf, shapeChoices, shapeChoicesMap } from '@/types'
 
 const validationSchema = yup.object({
 	name: yup.string().min(1).required(),
-	choice: yup.string().oneOf(['one', 'two']).required(),
+	shape: yup.string().oneOf(shapeChoices).required(),
 	count: yup.number().required()
 })
+
+type FormDataType = yup.InferType<typeof validationSchema>
+
+const getFormDataPropName = propertiesOf<FormDataType>()
+
+const formDataProps = proxiedPropertiesOf<FormDataType>()
 
 const FormikWithCustomComponents: React.FC = () => {
 	const [formState, setFormState] = useState<PersonChoiceState>({})
 	const [generalError, setGeneralError] = useState<string | null>(null)
+
+	const nameId = useId()
+	const shapeId = useId()
+	const countId = useId()
+
+	// TODO: this initial values are invalid compared to validation schema
+	const initialValues = {
+		name: '',
+		shape: '',
+		count: ''
+	}
 	return (
 		<div>
 			<h2 className='text-xl text-center'>Formik with custom components</h2>
@@ -29,46 +45,51 @@ const FormikWithCustomComponents: React.FC = () => {
 			</div>
 
 			<Formik
-				initialValues={{
-					name: '',
-					choice: '',
-					count: ''
-				}}
+				initialValues={initialValues}
 				validationSchema={validationSchema}
-				onSubmit={(data) => {
-					console.log('submitting', data)
+				onSubmit={async (formData) => {
+					console.log('submitting', formData)
 					// here (when calling addPersonChoice2) happens AJAX request to server 
 					// because addPersonChoice2 is server action
-					!(async () => {
-						const addResult = await addPersonChoice2(data)
+					try {
+						const addResult = await addPersonChoice2(formData)
 						setFormState(addResult)
-					})().catch(e => { setGeneralError(e.message) })
-
+					} catch (e) {
+						const errMsg = (e != null
+							&& typeof e === 'object'
+							&& 'message' in e
+						) ? e.message + '' : 'Unknown error'
+						setGeneralError(errMsg)
+					}
 				}}
 			>
 				{(formik) => (
 					<Form className='text-center p-12'>
 						<FormikCustomInput
-							id='fms-name'
-							label='name'
-							name='name'
+							id={nameId}
+							label='Name'
+							name={formDataProps.name}
 						/>
 
 						<FormikCustomSelect
-							id='fms-choice'
-							label='choice'
-							name='choice'
+							id={shapeId}
+							label='Shape'
+							// name={propertyOf<FormDataType>('shape')}
+							// name={formDataProps('shape')}
+							name={formDataProps.shape}
 						>
 							<option value=''>Select one</option>
-							<option value='one'>One</option>
-							<option value='two'>Two</option>
+							{shapeChoices.map((shape) => (
+								<option key={shape} value={shape}>{shapeChoicesMap[shape].name}</option>
+							))}
 						</FormikCustomSelect>
 
 						<FormikCustomInput
-							id='fms-count'
+							id={countId}
 							label='Count'
-							name='count'
+							name={formDataProps.count}
 						/>
+
 						{formState && formState.errors && <div className='mb-5'>
 							{formState.errors.map(e => (
 								<div key={e} className='text-red-500'>{e}</div>
