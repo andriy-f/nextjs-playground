@@ -17,6 +17,8 @@ function Td(props: React.PropsWithChildren) {
 
 type ThOrTdReactComponent = typeof Th | typeof Td
 
+export const dynamic = 'force-dynamic' // todo This allows build without access to db, otherwise it fails
+
 export default async function Page() {
 	const todos = await prisma.todo.findMany();
 
