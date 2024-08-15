@@ -1,5 +1,6 @@
 import { propertiesOf, proxiedPropertiesOf } from '@/types'
 import * as yup from 'yup'
+import { Result } from '@/features/common/Result'
 
 export type PersonSaveResult = {
     // errors?: {
@@ -10,6 +11,14 @@ export type PersonSaveResult = {
     errors?: string[]
     message?: string
 }
+
+export type AddPersonSuccessData = {}
+
+export type AddPersonFailData = {
+    errors: string[]
+}
+
+export type AddPersonResult = Result<AddPersonSuccessData, AddPersonFailData>
 
 export const lifePaths = ['bhakti', 'karma', 'jnana', 'bhukti', 'mukti'] as const
 

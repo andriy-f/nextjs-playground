@@ -1,4 +1,3 @@
-
 'use client'
 
 import React, { useState, useId } from 'react'
@@ -6,8 +5,8 @@ import { Formik, Form } from 'formik'
 
 import FormikCustomInput from '@/components/FormikCustomInput'
 import FormikCustomSelect from '@/components/FormikCustomSelect'
-import { addPersonChoice2 } from './actions'
-import { lifePaths, Person, personProps, PersonSaveResult, personValidationSchema } from '@/app/person/types'
+import { addPersonChoice2 } from '@/features/person/actions'
+import { lifePaths, Person, personProps, PersonSaveResult, personValidationSchema } from '@/features/person/types'
 
 
 const FormikWithCustomComponents: React.FC = () => {

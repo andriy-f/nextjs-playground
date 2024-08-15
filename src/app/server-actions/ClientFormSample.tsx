@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { useFormState } from 'react-dom'
-import { addPersonChoice3 } from '@/app/person/actions'
-import { PersonSaveResult } from '@/app/person/types'
+import { addPersonChoice3 } from '@/features/person/actions'
+import { PersonSaveResult } from '@/features/person/types'
 
 const ClientFormSample = () => {
 	const [state, formAction] = useFormState<PersonSaveResult, FormData>(addPersonChoice3, {})

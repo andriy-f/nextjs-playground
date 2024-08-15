@@ -1,7 +1,9 @@
 'use server'
 import * as yup from 'yup'
+import R, { add } from 'ramda'
 
-import { PersonSaveResult, personValidationSchema } from "./types"
+import { AddPersonFailData, AddPersonResult, Person, PersonSaveResult, personValidationSchema } from '@/features/person/types'
+import { Result } from '@/features/common/Result'
 
 export type PersonServerSide = {
     name: string
@@ -9,10 +11,11 @@ export type PersonServerSide = {
     count: number
 }
 
+const parseFormData = (formData: FormData): unknown => Object.fromEntries(formData.entries())
+
 // not working as server action
 export const addPersonChoice = async (formData: FormData) => {
     try {
-
         const pcParsed = await personValidationSchema.validate(Object.fromEntries(formData.entries()))
         console.log('dummy saving person choice', pcParsed)
     } catch (e) {
@@ -62,3 +65,37 @@ export const addPersonChoice2 = async (data: unknown): Promise<PersonSaveResult>
         }
     }
 }
+
+const validateAddPersonData = async (data: unknown): Promise<Result<Person, AddPersonFailData>> => {
+    try {
+        const pcParsed = await personValidationSchema.validate(data)
+        return {
+            type: 'success',
+            successData: pcParsed
+        }
+    } catch (e) {
+        if (e instanceof yup.ValidationError) {
+            return {
+                type: 'failure',
+                failureData: {
+                    errors: e.errors
+                }
+            }
+        } else {
+            return {
+                type: 'failure',
+                failureData: {
+                    errors: ['ERROR parsing/validating person']
+                }
+            }
+        }
+    }
+
+}
+
+// const addPersonToDb = async (data: Person): Promise<AddPersonResult> => { }
+
+const addPersonPipe = R.pipeWith((f, res) => R.andThen)
+// export const addPerson = async (data: unknown): Promise<AddPersonResult> => {
+//     addPersonPipe()
+// }
