@@ -13,6 +13,7 @@
     "@prisma/client": "^5.17.0",
     "formik": "^2.4.6",
     "next": "^14.2.4",
+    "ramda": "^0.30.1",
     "react": "^18",
     "react-dom": "^18",
     "yup": "^1.4.0",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/ramda": "^0.30.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
