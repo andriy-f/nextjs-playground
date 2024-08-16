@@ -95,7 +95,13 @@ const validateAddPersonData = async (data: unknown): Promise<Result<Person, AddP
 
 // const addPersonToDb = async (data: Person): Promise<AddPersonResult> => { }
 
-const addPersonPipe = R.pipeWith((f, res) => R.andThen)
+const addPersonPipe = R.pipeWith(
+    (f, res) => R.andThen((x) => (x as Result<any, any>).type === 'success' ? f(x) : x, res),
+    [
+        validateAddPersonData,
+        // addPersonToDb,
+        console.log
+    ])
 // export const addPerson = async (data: unknown): Promise<AddPersonResult> => {
 //     addPersonPipe()
 // }
