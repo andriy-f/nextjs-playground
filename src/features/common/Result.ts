@@ -9,3 +9,7 @@ export type Failure<F> = {
 }
 
 export type Result<S, F> = Success<S> | Failure<F>
+
+export const pipeWithHelper =
+    (fn: Function, result: Result<unknown, unknown>): Result<unknown, unknown> =>
+        result.type === 'success' ? fn(result.successData) : result
