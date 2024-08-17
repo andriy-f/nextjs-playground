@@ -1,6 +1,6 @@
 'use server'
 import * as yup from 'yup'
-import R, { add } from 'ramda'
+import * as R from 'ramda'
 
 import { AddPersonFailData, AddPersonResult, Person, PersonSaveResult, personValidationSchema } from '@/features/person/types'
 import { Result } from '@/features/common/Result'
