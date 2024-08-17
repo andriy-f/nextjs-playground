@@ -3,6 +3,7 @@
         "Formik",
         "nextjs",
         "proxied",
+        "tailwindcss",
         "todos"
     ]
 }
