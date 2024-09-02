@@ -11,11 +11,11 @@ export type Failure<F> = {
 export type Result<S = any, F = any> = Success<S> | Failure<F>
 
 /**
- * Function used for binding (chaining) monadic functions. Also known as flatMap.
+ * Function used for binding (chaining) monadic functions. Also known as flatMap. Unwraps result and feeds to fn
  * @param fn Monad function (input normal, output monad)
  * @param result previous monad result (Result) which 
  * @returns result of applying function to "unwrapped" result
  */
-export const pipeWithHelper =
-    (fn: Function, result: Result<unknown, unknown>): Result<unknown, unknown> =>
+export const flatMapResult =
+    <A = any, B = any, F = any>(fn: (input: A) => Result<B, F>, result: Result<A, F>): Result<B, F> =>
         result.type === 'success' ? fn(result.successData) : result
