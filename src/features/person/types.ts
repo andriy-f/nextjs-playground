@@ -1,6 +1,6 @@
 import { propertiesOf, proxiedPropertiesOf } from '@/types'
 import * as yup from 'yup'
-import { Result } from '@/features/common/Result'
+import { Result } from '@/features/common/result'
 
 export type PersonSaveResult = {
     // errors?: {

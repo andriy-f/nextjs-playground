@@ -3,7 +3,7 @@ import * as yup from 'yup'
 import * as R from 'ramda'
 
 import { AddPersonFailData, AddPersonResult, Person, PersonSaveResult, personValidationSchema } from '@/features/person/types'
-import { Result } from '@/features/common/Result'
+import { Result } from '@/features/common/result'
 
 export type PersonServerSide = {
     name: string
