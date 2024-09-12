@@ -12,7 +12,7 @@
     "get-prisma-engines": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/get-engines.ts"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/get-engines.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
