@@ -7,6 +7,7 @@ const NavLinks = [
 	{ href: "/server-side-forms", label: "Server side forms", description: "Server side forms" },
 	{ href: "/server-actions", label: "Client forms", description: "Client side forms" },
 	{ href: "/todo-list", label: "Todo list", description: "Todo list" },
+	{ href: "/inactivity-detector", label: "Inactivity Detector", description: "Detects when user is inactive for some time." },
 ];
 
 export default function Home() {
