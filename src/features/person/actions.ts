@@ -21,7 +21,6 @@ export const addPersonChoice = async (formData: FormData) => {
     } catch (e) {
         if (e instanceof yup.ValidationError) {
             console.log('dummy saving person validation error', e.errors)
-            return e.errors
         } else {
             console.log('dummy saving person error', e)
         }
