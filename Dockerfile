@@ -1,4 +1,4 @@
-FROM node:20-bookworm-slim as base
+FROM node:22-bookworm-slim as base
 ARG APP_ROOT=/app
 # RUN set -ex; \
 #     apt-get update -y; \
