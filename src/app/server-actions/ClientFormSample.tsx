@@ -1,12 +1,11 @@
 'use client'
 
-import React from 'react'
-import { useFormState } from 'react-dom'
+import React, { useActionState } from 'react'
 import { addPersonChoice3 } from '@/features/person/actions'
 import { PersonSaveResult } from '@/features/person/types'
 
 const ClientFormSample = () => {
-	const [state, formAction] = useFormState<PersonSaveResult, FormData>(addPersonChoice3, {})
+	const [state, formAction] = useActionState<PersonSaveResult, FormData>(addPersonChoice3, {})
 	return (
 		<form action={formAction}>
 
