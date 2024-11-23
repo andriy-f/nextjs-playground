@@ -4,14 +4,14 @@
 
 import { type NextRequest, NextResponse } from "next/server";
 
-// export { auth as middleware } from "@/features/auth/auth";
+export { auth as middleware } from "@/features/auth/auth";
 
-export const middleware = async (request: NextRequest) => {
-    if (request.nextUrl.pathname.startsWith('/dashboard')) {
-        console.log('middleware.ts: redirecting dashboard to /auth/signin')
-        return NextResponse.rewrite(new URL('/auth/signin', request.url))
-    }
-}
+// export const middleware = async (request: NextRequest) => {
+//     if (request.nextUrl.pathname.startsWith('/dashboard')) {
+//         console.log('middleware.ts: redirecting dashboard to /auth/signin')
+//         return NextResponse.rewrite(new URL('/auth/signin', request.url))
+//     }
+// }
 
 export const config = {
     // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher

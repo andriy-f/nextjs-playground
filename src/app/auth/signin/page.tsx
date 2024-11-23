@@ -1,10 +1,10 @@
-import { SignIn } from "@/features/auth/signIn"
+import SignInForm from "@/features/auth/signIn"
 
 const SignInPage = () => {
 	return (
-		<div>
+		<div className="mx-auto max-w-md">
 			<h1>Sign In</h1>
-			<SignIn />
+			<SignInForm />
 		</div>
 	)
 }
