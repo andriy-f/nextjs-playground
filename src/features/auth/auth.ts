@@ -32,13 +32,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				password: {},
 			},
 			authorize: async (credentials) => {
-				console.log('auth.ts authorize', credentials)
+				// console.log('auth.ts authorize', credentials)
 				try {
 					let user = null
 
 					// logic to verify if the user exists
 					const { email, password } = await signInSchema.parseAsync(credentials)
-					console.log('auth.ts authorize 2', email, password)
+					// console.log('auth.ts authorize 2', email, password)
 					user = (email === 'root@gmail.info' && password === 'Arthur there') ? { email: email } : null
 
 					if (!user) {
@@ -51,7 +51,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 					return user
 				}
 				catch (error) {
-					console.log('auth.ts authorize error', error)
+					// console.log('auth.ts authorize error', error)
 					if (error instanceof ZodError) {
 						// Return `null` to indicate that the credentials are invalid
 						return null
