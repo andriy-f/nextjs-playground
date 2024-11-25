@@ -42,14 +42,9 @@ import {
 // IS working
 // type Props = FieldAttributes<any>
 
-// type Props = React.JSX.IntrinsicElements['input'] & {
-// 	label: string
-// }
-
-type Props = {
+type Props = React.JSX.IntrinsicElements['input'] & {
 	label: string
-	id?: string
-	name: string
+	name: string // fixed formik.useField, I guess this overrides optional name attribute, makes it mandatory
 }
 
 const FormikCustomInput: React.FC<Props> = ({ label, ...props }) => {
