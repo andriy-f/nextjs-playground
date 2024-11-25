@@ -1,4 +1,3 @@
-import { subscribe } from 'diagnostics_channel';
 import { Observable } from 'rxjs';
 
 export const rxjsSample1 = () => {

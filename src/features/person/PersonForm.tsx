@@ -6,7 +6,7 @@ import { Formik, Form } from 'formik'
 import FormikCustomInput from '@/components/FormikCustomInput'
 import FormikCustomSelect from '@/components/FormikCustomSelect'
 import { addPersonChoice2 } from '@/features/person/actions'
-import { lifePaths, Person, personProps, PersonSaveResult, personValidationSchema } from '@/features/person/types'
+import { lifePaths, personProps, PersonSaveResult, personValidationSchema } from '@/features/person/types'
 
 
 const FormikWithCustomComponents: React.FC = () => {
@@ -67,7 +67,7 @@ const FormikWithCustomComponents: React.FC = () => {
 					}
 				}}
 			>
-				{(formik) => (
+				{() => (
 					<Form className='text-center p-12'>
 						<FormikCustomInput
 							id={nameId}

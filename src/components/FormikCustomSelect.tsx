@@ -1,18 +1,30 @@
-import { useField, FieldAttributes } from 'formik';
-import React from 'react'
+import { useField } from 'formik';
+import React, { useId } from 'react'
 
-const FormikCustomSelect: React.FC<FieldAttributes<any>> = ({ label, ...props }) => {
+
+type Props = {
+	label: string
+	id?: string
+	name: string
+}
+
+const FormikCustomSelect: React.FC<Props> = ({ label, ...props }) => {
 	const [field, meta] = useField(props);
+	const autoId = useId()
+	const id = props.id ?? autoId
+
 	return (
 		<div className='mb-5'>
 			<label
 				className='block'
-				htmlFor={props.id || props.name}
+				htmlFor={id}
 			>{label}</label>
 			<select
 				className='p-2 rounded-md'
 				{...field}
-				{...props} />
+				{...props}
+				id={id}
+			/>
 			{meta.touched && meta.error ? (
 				<div className="text-red-600">{meta.error}</div>
 			) : null}

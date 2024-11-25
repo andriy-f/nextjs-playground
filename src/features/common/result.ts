@@ -8,7 +8,7 @@ export type Failure<F> = {
     failureData: F
 }
 
-export type Result<S = any, F = any> = Success<S> | Failure<F>
+export type Result<S, F> = Success<S> | Failure<F>
 
 /**
  * Function used for binding (chaining) monadic functions. Also known as flatMap. Unwraps result and feeds to fn
@@ -17,5 +17,5 @@ export type Result<S = any, F = any> = Success<S> | Failure<F>
  * @returns result of applying function to "unwrapped" result
  */
 export const flatMapResult =
-    <A = any, B = any, F = any>(fn: (input: A) => Result<B, F>, result: Result<A, F>): Result<B, F> =>
+    <A = unknown, B = unknown, F = unknown>(fn: (input: A) => Result<B, F>, result: Result<A, F>): Result<B, F> =>
         result.type === 'success' ? fn(result.successData) : result

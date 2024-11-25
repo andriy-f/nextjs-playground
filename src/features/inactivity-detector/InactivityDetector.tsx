@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 const InactivityDetector: React.FC = () => {
-	const [isInactive, setIsInactive] = useState(false)
+	const [isInactive] = useState(false)
 
 	return (<>
 		<div>Is active: {!isInactive ? 'Yes' : 'No'}</div>

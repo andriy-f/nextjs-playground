@@ -2,7 +2,7 @@
 // Use the file middleware.ts (or .js) in the root of your project to define Middleware. 
 // For example, at the same level as pages or app, or inside src if applicable.
 
-import { type NextRequest, NextResponse } from "next/server";
+// import { type NextRequest, NextResponse } from "next/server";
 
 export { auth as middleware } from "@/features/auth/auth";
 

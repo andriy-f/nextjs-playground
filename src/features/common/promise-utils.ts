@@ -1,12 +1,13 @@
 
-import { andThen, otherwise, curry } from "ramda"
+import { andThen } from "ramda"
 
-export const promisePipeFilter = (fn: (x: any) => any, result: Promise<unknown>) => andThen(fn, result)
+export const promisePipeFilter = (fn: (x: unknown) => unknown, result: Promise<unknown>) => andThen(fn, result)
 
-type SomeFunction<T = any, R = any> = (x: T) => R
-type PromiseFunction<T = any, R = any> = (x: T) => Promise<R>
+type SomeFunction<T = unknown, R = unknown> = (x: T) => R
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type PromiseFunction<T = unknown, R = unknown> = (x: T) => Promise<R>
 
-export const myThen = (f: any) => (g: Promise<any>) => g.then(f)
+export const myThen = (f: () => unknown) => (g: Promise<unknown>) => g.then(f)
 // export const myThen = curry((f: any, g: Promise<any>) => g.then(f))
 
 /** Compose regular functions */
@@ -14,7 +15,7 @@ const composeF = <T>(...fns: SomeFunction[]) => (x: T) => fns.reduceRight((acc, 
 
 /** Compose promise-returning functions */
 const composeM = (chainMethod: string) => (...ms: SomeFunction[]) => (
-    ms.reduce((f, g) => (x: any) => g(x)[chainMethod](f))
+    ms.reduce((f, g) => (x: unknown) => g(x)[chainMethod](f))
 );
 
 const composePromises = composeM('then');
@@ -26,7 +27,7 @@ const trace = (label: string) => (value: unknown) => {
 
 const add3 = (x: number) => x + 3;
 const multiply2 = (x: number) => x * 2;
-const addThenMultiply = composeF(multiply2, add3);
+const _addThenMultiply = composeF(multiply2, add3);
 
 export const testRun = async () => {
     const label = 'API call composition';

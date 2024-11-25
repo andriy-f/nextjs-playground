@@ -2,7 +2,7 @@
 import * as yup from 'yup'
 import * as R from 'ramda'
 
-import { AddPersonFailData, AddPersonResult, Person, PersonSaveResult, personValidationSchema } from '@/features/person/types'
+import { AddPersonFailData, Person, PersonSaveResult, personValidationSchema } from '@/features/person/types'
 import { Result } from '@/features/common/result'
 
 export type PersonServerSide = {
@@ -11,7 +11,7 @@ export type PersonServerSide = {
     count: number
 }
 
-const parseFormData = (formData: FormData): unknown => Object.fromEntries(formData.entries())
+// const parseFormData = (formData: FormData): unknown => Object.fromEntries(formData.entries())
 
 // not working as server action
 export const addPersonChoice = async (formData: FormData) => {
@@ -27,9 +27,9 @@ export const addPersonChoice = async (formData: FormData) => {
     }
 }
 
-export const addPersonChoice3 = async (prevState: PersonSaveResult, formData: FormData): Promise<PersonSaveResult> => {
+export const addPersonChoice3 = async (_prevState: PersonSaveResult, formData: FormData): Promise<PersonSaveResult> => {
     try {
-        const pcParsed = await personValidationSchema.validate(Object.fromEntries(formData.entries()))
+        await personValidationSchema.validate(Object.fromEntries(formData.entries()))
         return {
             message: 'OK: dummy saving person choice 3 Done'
         }
@@ -48,7 +48,7 @@ export const addPersonChoice3 = async (prevState: PersonSaveResult, formData: Fo
 
 export const addPersonChoice2 = async (data: unknown): Promise<PersonSaveResult> => {
     try {
-        const pcParsed = await personValidationSchema.validate(data)
+        await personValidationSchema.validate(data)
         return {
             message: 'OK: dummy saving person choice 2 Done'
         }
@@ -94,8 +94,9 @@ const validateAddPersonData = async (data: unknown): Promise<Result<Person, AddP
 
 // const addPersonToDb = async (data: Person): Promise<AddPersonResult> => { }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const addPersonPipe = R.pipeWith(
-    (f, res) => R.andThen((x) => (x as Result<any, any>).type === 'success' ? f(x) : x, res),
+    (f, res) => R.andThen((x) => (x as Result<S, F>).type === 'success' ? f(x) : x, res),
     [
         validateAddPersonData,
         // addPersonToDb,

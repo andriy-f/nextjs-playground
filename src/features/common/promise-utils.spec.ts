@@ -1,14 +1,14 @@
-import { expect, test, describe, it, vi } from 'vitest'
-import { promisePipeFilter, testRun, myThen } from './promise-utils'
-import { pipeWith, otherwise, andThen, pipe, identity } from 'ramda'
+import { expect, test, describe, vi } from 'vitest'
+import { testRun } from './promise-utils'
+import { pipeWith, andThen } from 'ramda'
 
 describe('Composing promises with Ramda', () => {
 	test('reject on second step', async () => {
 		const add1Async = vi.fn((x: string) => Promise.resolve(x + '1'))
-		const rejectAsync = vi.fn((x: string) => Promise.reject('ERROR1'))
+		const rejectAsync = vi.fn((_: string) => Promise.reject('ERROR1'))
 		const add2Sync = vi.fn((x: string) => x + '2')
 		const add3Async = vi.fn((x: string) => Promise.resolve(x + '3'))
-		const reject2Async = vi.fn((x: string) => Promise.reject('ERROR2'))
+		const reject2Async = vi.fn((_: string) => Promise.reject('ERROR2'))
 		const wasCaught = vi.fn((x: string) => x)
 		const testPipe = pipeWith(andThen,
 			[

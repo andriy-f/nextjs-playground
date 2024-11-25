@@ -16,6 +16,7 @@ type Square = {
 
 type Shape2D = Circle | Rectangle | Square
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getArea = (shape: Shape2D) => {
 	switch (shape.type) {
 		case 'circle':
@@ -26,7 +27,7 @@ const getArea = (shape: Shape2D) => {
 			return shape.side ** 2
 		default:
 			// exhaustiveness check
-			const x: never = shape
+			const _: never = shape
 			throw new Error('this will not compile anyway')
 	}
 }
@@ -58,6 +59,7 @@ const isSquare = (shape: Shape2D) => {
 	return 'side' in shape
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getCircumference = (shape: Shape2D) => {
 	if (isCircle(shape)) {
 		return 2 * Math.PI * shape.radius
@@ -82,13 +84,13 @@ export function propertyOf<TObj>(name: keyof TObj) {
 	return name;
 }
 
-export function propertiesOf<TObj>(_obj: (TObj | undefined) = undefined) {
+export function propertiesOf<TObj>(_: (TObj | undefined) = undefined) {
 	return function result<T extends keyof TObj>(name: T) {
 		return name;
 	}
 }
 
-export function proxiedPropertiesOf<TObj>(obj?: TObj) {
+export function proxiedPropertiesOf<TObj>(_?: TObj) {
 	return new Proxy({}, {
 		get: (_, prop) => prop,
 		set: () => {

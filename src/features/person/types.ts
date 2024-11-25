@@ -12,7 +12,7 @@ export type PersonSaveResult = {
     message?: string
 }
 
-export type AddPersonSuccessData = {}
+export type AddPersonSuccessData = object
 
 export type AddPersonFailData = {
     errors: string[]

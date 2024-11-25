@@ -1,9 +1,7 @@
 
-import React from 'react'
+import React, { useId } from 'react'
 import {
-	type GenericFieldHTMLAttributes, useField,
-	type Field, type FieldConfig,
-	type FieldHookConfig, type FieldAttributes
+	useField,
 } from 'formik'
 
 // NOT working
@@ -44,7 +42,15 @@ import {
 // IS working
 // type Props = FieldAttributes<any>
 
-type Props = FieldAttributes<any>
+// type Props = React.JSX.IntrinsicElements['input'] & {
+// 	label: string
+// }
+
+type Props = {
+	label: string
+	id?: string
+	name: string
+}
 
 const FormikCustomInput: React.FC<Props> = ({ label, ...props }) => {
 	// useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -52,15 +58,19 @@ const FormikCustomInput: React.FC<Props> = ({ label, ...props }) => {
 	// message if the field is invalid and it has been touched (i.e. visited)
 	// useFiled<V> where V is type of value of input (defaults to any)
 	const [field, meta] = useField(props);
+	const autoId = useId()
+	const id = props.id ?? autoId
+
 	return (
 		<div className='mb-5'>
 			<label
 				className='block'
-				htmlFor={props.id || props.name}>{label}</label>
+				htmlFor={id}>{label}</label>
 			<input
 				className='rounded-md p-2'
 				{...field}
-				{...props} />
+				{...props}
+				id={id} />
 			{meta.touched && meta.error ? (
 				<div className='text-red-600'>{meta.error}</div>
 			) : null}

@@ -1,17 +1,16 @@
 import { composeWith } from 'ramda'
 
-type CreateTodoWebRequest = {
-    headers: string[],
-    body: FormData,
-}
+// type CreateTodoWebRequest = {
+//     headers: string[],
+//     body: FormData,
+// }
 
-type CreateTodoWebRequestWithParsedBody = CreateTodoWebRequest & {
-    parsedBody: unknown,
+// type CreateTodoWebRequestWithParsedBody = CreateTodoWebRequest & {
+//     parsedBody: unknown,
+// }
 
-}
-
-const parseCreateTodoWebRequest = (body: unknown) => {
-}
+// const parseCreateTodoWebRequest = (body: unknown) => {
+// }
 
 export const handleCreateTodoWebRequest = composeWith(() => 1,
     [() => 1])
