@@ -96,7 +96,7 @@ const validateAddPersonData = async (data: unknown): Promise<Result<Person, AddP
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const addPersonPipe = R.pipeWith(
-    (f, res) => R.andThen((x) => (x as Result<S, F>).type === 'success' ? f(x) : x, res),
+    (f, res) => R.andThen((x) => (x as Result<unknown, unknown>).type === 'success' ? f(x) : x, res),
     [
         validateAddPersonData,
         // addPersonToDb,
