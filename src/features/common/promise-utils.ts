@@ -1,9 +1,9 @@
 
-import { andThen } from "ramda"
+import { andThen, type AtLeastOneFunctionsFlow } from "ramda"
 
 export const promisePipeFilter = (fn: (x: unknown) => unknown, result: Promise<unknown>) => andThen(fn, result)
 
-type SomeFunction<T = unknown, R = unknown> = (x: T) => R
+// type SomeFunction<T = unknown, R = unknown> = (x: T) => R
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type PromiseFunction<T = unknown, R = unknown> = (x: T) => Promise<R>
 
@@ -11,10 +11,10 @@ export const myThen = (f: () => unknown) => (g: Promise<unknown>) => g.then(f)
 // export const myThen = curry((f: any, g: Promise<any>) => g.then(f))
 
 /** Compose regular functions */
-const composeF = <T>(...fns: SomeFunction[]) => (x: T) => fns.reduceRight((acc, f) => f(acc), x);
+const composeF = <TArgs extends unknown[], TResult>(...fns: AtLeastOneFunctionsFlow<TArgs, TResult>) => <TArgs extends unknown[]>(..._args: TArgs) => fns.reduceRight((acc, f) => f(acc), _args);
 
 /** Compose promise-returning functions */
-const composeM = (chainMethod: string) => (...ms: SomeFunction[]) => (
+const composeM = (chainMethod: string) => <TArgs extends unknown[], TResult>(...ms: AtLeastOneFunctionsFlow<TArgs, TResult>) => (
     ms.reduce((f, g) => (x: unknown) => g(x)[chainMethod](f))
 );
 
