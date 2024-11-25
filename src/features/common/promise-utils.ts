@@ -1,5 +1,5 @@
 
-import { andThen, type AtLeastOneFunctionsFlow } from "ramda"
+import { andThen, type AtLeastOneFunctionsFlow, AtLeastOneFunctionsFlowFromRightToLeft } from "ramda"
 
 export const promisePipeFilter = (fn: (x: unknown) => unknown, result: Promise<unknown>) => andThen(fn, result)
 
@@ -14,7 +14,7 @@ export const myThen = (f: () => unknown) => (g: Promise<unknown>) => g.then(f)
 const composeF = <TArgs extends unknown[], TResult>(...fns: AtLeastOneFunctionsFlow<TArgs, TResult>) => <TArgs extends unknown[]>(..._args: TArgs) => fns.reduceRight((acc, f) => f(acc), _args);
 
 /** Compose promise-returning functions */
-const composeM = (chainMethod: string) => <TArgs extends unknown[], TResult>(...ms: AtLeastOneFunctionsFlow<TArgs, TResult>) => (
+const composeM = (chainMethod: string) => <TArgs extends unknown[], TResult>(...ms: AtLeastOneFunctionsFlowFromRightToLeft<TArgs, TResult>) => (
     ms.reduce((f, g) => (x: unknown) => g(x)[chainMethod](f))
 );
 

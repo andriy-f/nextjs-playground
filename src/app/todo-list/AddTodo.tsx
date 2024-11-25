@@ -25,7 +25,7 @@ const AddTodo: React.FC = () => {
 			initialValues={initialValues}
 			onSubmit={async (values, formikHelpers) => {
 				formikHelpers.resetForm();
-				await addTodo(null, values);
+				await addTodo({}, values);
 			}}
 			validationSchema={validationSchema}
 		>
