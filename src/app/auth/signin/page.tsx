@@ -2,8 +2,7 @@ import SignInForm from "@/features/auth/signInForm"
 
 const SignInPage = () => {
 	return (
-		<div className="mx-auto max-w-md">
-			<h1>Sign In</h1>
+		<div className="mx-auto max-w-sm">
 			<SignInForm />
 		</div>
 	)
