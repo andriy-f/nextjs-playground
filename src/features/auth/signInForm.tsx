@@ -1,14 +1,14 @@
 'use client';
 
-// import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from '@/features/shared/ui/fonts';
 import {
 	AtSymbolIcon,
 	KeyIcon,
 	ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { Button } from '@/features/shared/button';
-import { useActionState } from 'react';
+import { Button } from '@/features/shared/ui/button';
+import { version as reactVersion, useActionState } from 'react';
 import { authenticate } from './serverActions'
 
 export default function SignInForm() {
@@ -17,11 +17,12 @@ export default function SignInForm() {
 		undefined,
 	);
 
+	console.log('reactVersion', reactVersion)
+
 	return (
 		<form action={formAction} className="space-y-3">
 			<div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-				{/* <h1 className={`${lusitana.className} mb-3 text-2xl`}> */}
-				<h1 className="mb-3 text-2xl">
+				<h1 className={`${lusitana.className} mb-3 text-2xl`}>
 					Please log in to continue.
 				</h1>
 				<div className="w-full">
