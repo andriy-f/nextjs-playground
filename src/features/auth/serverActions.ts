@@ -1,25 +1,35 @@
 'use server';
 
-import { signIn } from './auth';
+import { signIn, signOut } from './auth';
 import { AuthError } from 'next-auth';
 
-// ...
-
-export async function authenticate(
-    _prevState: string | undefined,
-    formData: FormData,
+/**
+ * server action for sign-in form (used via useActionState)
+ */
+export async function signInAction(
+	_prevState: string | undefined,
+	formData: FormData,
 ) {
-    try {
-        await signIn('credentials', formData);
-    } catch (error) {
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case 'CredentialsSignin':
-                    return 'Invalid credentials.';
-                default:
-                    return 'Something went wrong.';
-            }
-        }
-        throw error;
-    }
+	try {
+		await signIn('credentials', formData);
+	} catch (error) {
+		if (error instanceof AuthError) {
+			// AuthError from NextAuth.js
+			// Expected user error, like invalid credentials
+			switch (error.type) {
+				case 'CredentialsSignin':
+					return 'Invalid credentials.';
+				default:
+					return 'Something went wrong.';
+			}
+		} else {
+			// Unexpected error, so re-throw
+			throw error;
+		}
+
+	}
+}
+
+export async function signOutAction() {
+	await signOut();
 }

@@ -1,7 +1,14 @@
+// Centralized file for all authentication related logic
+// This file is used to configure NextAuth.js
+// https://next-auth.js.org/configuration/options
+// This file can be placed anywhere in your project.
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from "./validation"
-import { ZodError } from "zod"
+
+const areValidCredentials = ({ email, password }: { email: string, password: string }) => {
+	return email === 'root@gmail.info' && password === 'Arthur there'
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: {
@@ -32,34 +39,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				password: {},
 			},
 			authorize: async (credentials) => {
-				// console.log('auth.ts authorize', credentials)
-				try {
-					let user = null
-
-					// logic to verify if the user exists
-					const { email, password } = await signInSchema.parseAsync(credentials)
-					// console.log('auth.ts authorize 2', email, password)
-					user = (email === 'root@gmail.info' && password === 'Arthur there') ? { email: email } : null
-
-					if (!user) {
-						// No user found, so this is their first attempt to login
-						// Optionally, this is also the place you could do a user registration
-						throw new Error("Invalid credentials.") // TODO
-					}
-
-					// return user object with their profile data
-					return user
+				const { success, data } = await signInSchema.safeParseAsync(credentials)
+				if (success && data) {
+					// Credentials are valid according to schema
+					const { email, password } = data
+					return areValidCredentials({ email, password })
+						? { email: email } // User is authenticated
+						: null // Invalid credentials
+				} else {
+					// Credentials or whatever user entered doesn't match schema
+					return null
 				}
-				catch (error) {
-					// console.log('auth.ts authorize error', error)
-					if (error instanceof ZodError) {
-						// Return `null` to indicate that the credentials are invalid
-						return null
-					} else {
-						return null // TODO
-					}
-				}
-			},
+			}
 		}),
 	],
 })
