@@ -6,5 +6,7 @@
         "proxied",
         "tailwindcss",
         "todos"
-    ]
+    ],
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.detectIndentation": false
 }

@@ -29,6 +29,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^2.11.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.0",
     "@types/node": "^20",
@@ -46,5 +47,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5",
     "vitest": "^2.0.5"
+  },
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
   }
 }
