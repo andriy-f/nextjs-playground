@@ -1,9 +1,7 @@
-
-
 export default function Page() {
-  return (
-    <div>
-      Samples empty
-    </div>
-  )
+	return (
+		<div>
+			Samples empty
+		</div>
+	)
 }

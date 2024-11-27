@@ -5,15 +5,15 @@ import prisma from '@/db'
 import { AddTodoFormValues } from '@/types';
 
 export const addTodo = async (oldState: object, { title }: AddTodoFormValues) => {
-    await prisma.todo.create({
-        data: {
-            title,
-        },
-    });
+	await prisma.todo.create({
+		data: {
+			title,
+		},
+	});
 
-    revalidatePath('/todo-list')
+	revalidatePath('/todo-list')
 
-    return {
-        ...oldState,
-    };
+	return {
+		...oldState,
+	};
 }

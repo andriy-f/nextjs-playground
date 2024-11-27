@@ -1,11 +1,11 @@
 export type Success<S> = {
-    type: 'success'
-    successData: S
+	type: 'success'
+	successData: S
 }
 
 export type Failure<F> = {
-    type: 'failure'
-    failureData: F
+	type: 'failure'
+	failureData: F
 }
 
 export type Result<S, F> = Success<S> | Failure<F>
@@ -17,5 +17,5 @@ export type Result<S, F> = Success<S> | Failure<F>
  * @returns result of applying function to "unwrapped" result
  */
 export const flatMapResult =
-    <A = unknown, B = unknown, F = unknown>(fn: (input: A) => Result<B, F>, result: Result<A, F>): Result<B, F> =>
-        result.type === 'success' ? fn(result.successData) : result
+	<A = unknown, B = unknown, F = unknown>(fn: (input: A) => Result<B, F>, result: Result<A, F>): Result<B, F> =>
+		result.type === 'success' ? fn(result.successData) : result

@@ -13,4 +13,4 @@ import { composeWith } from 'ramda'
 // }
 
 export const handleCreateTodoWebRequest = composeWith(() => 1,
-    [() => 1])
+	[() => 1])

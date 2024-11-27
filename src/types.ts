@@ -97,6 +97,6 @@ export function proxiedPropertiesOf<TObj>(_?: TObj) {
 			throw Error('Set not supported');
 		},
 	}) as {
-			[P in keyof TObj]: P;
-		};
+		[P in keyof TObj]: P;
+	};
 }
