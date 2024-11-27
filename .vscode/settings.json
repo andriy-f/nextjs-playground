@@ -1,12 +1,15 @@
 {
-    "cSpell.words": [
-        "Formik",
-        "Lusitana",
-        "nextjs",
-        "proxied",
-        "tailwindcss",
-        "todos"
-    ],
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.detectIndentation": false
+	"cSpell.words": [
+		"Formik",
+		"Lusitana",
+		"nextjs",
+		"proxied",
+		"tailwindcss",
+		"todos"
+	],
+	"editor.detectIndentation": false,
+	"eslint.format.enable": true,
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	}
 }
