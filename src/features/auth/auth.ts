@@ -40,7 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			},
 			authorize: async (credentials) => {
 				const { success, data } = await signInSchema.safeParseAsync(credentials)
-				if (success && data) {
+				if (success) {
 					// Credentials are valid according to schema
 					const { email, password } = data
 					return areValidCredentials({ email, password })
