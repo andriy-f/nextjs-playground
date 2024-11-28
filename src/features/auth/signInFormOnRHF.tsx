@@ -19,7 +19,10 @@ import PInput from '@/shared/ui/PInputWithLabel';
 import ErrorUnderInput from '@/shared/ui/ErrorUnderInput';
 import { useRouter } from 'next/navigation';
 
-export default function SignInForm() {
+/**
+ * SignIn form on React Hook Forms (RHF) 
+ */
+export default function SignInFormOnRHF() {
 	const [isPending, setIsPending] = useState(false);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 	const router = useRouter();
