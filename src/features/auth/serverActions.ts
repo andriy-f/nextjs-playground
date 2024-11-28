@@ -5,6 +5,7 @@ import { AuthError } from 'next-auth';
 
 /**
  * server action for sign-in form (used via useActionState)
+ * TODO: delete because unused
  */
 export async function signInAction(
 	_prevState: string | undefined,
@@ -27,7 +28,6 @@ export async function signInAction(
 			// Unexpected error, so re-throw
 			throw error;
 		}
-
 	}
 }
 

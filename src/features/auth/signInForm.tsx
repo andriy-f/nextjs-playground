@@ -13,14 +13,16 @@ import {
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { lusitana } from '@/features/shared/ui/fonts';
 import { Button } from '@/features/shared/ui/button';
-import { signInAction } from './serverActions'
+import { signIn } from 'next-auth/react'
 import { signInSchema } from '@/features/auth/validation';
 import PInput from '@/shared/ui/PInputWithLabel';
 import ErrorUnderInput from '@/shared/ui/ErrorUnderInput';
+import { useRouter } from 'next/navigation';
 
 export default function SignInForm() {
 	const [isPending, setIsPending] = useState(false);
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const router = useRouter();
 
 	const { register, handleSubmit, formState } = useForm({
 		resolver: zodResolver(signInSchema),
@@ -28,17 +30,41 @@ export default function SignInForm() {
 
 	return (
 		<form onSubmit={handleSubmit((fieldValues) => {
-			const formData = new FormData();
-			formData.append('email', fieldValues.email);
-			formData.append('password', fieldValues.password);
-
 			// Submit data
 			setIsPending(true);
-			signInAction(undefined, formData)
-				.then((signInResult) => {
-					setErrorMessage(signInResult ?? null);
+			signIn('credentials', {
+				email: fieldValues.email,
+				password: fieldValues.password,
+				redirect: false,
+			})
+				.then((signInResp) => {
+					console.log('si r', signInResp)
+					switch (signInResp?.error) {
+						case null:
+							// sign in successful, so redirect to callbackUrl page or root
+							setErrorMessage(null);
+							const { url } = signInResp
+							if (signInResp.code === null && url && url.startsWith(location.origin)) {
+								const urlParsed = new URL(url);
+								const searchParams = new URLSearchParams(urlParsed.search);
+								const cbUrl = searchParams.get('callbackUrl');
+								console.log('redirecting...')
+								if (cbUrl && cbUrl.startsWith(location.origin)) {
+									router.replace(cbUrl);
+								} else {
+									router.replace('/')
+								}
+							}
+							break;
+						case 'CredentialsSignin':
+							setErrorMessage('Invalid credentials.');
+							break;
+						default:
+							setErrorMessage('Something went wrong.');
+					}
 				})
 				.catch((error) => {
+					console.log('si e', error)
 					setErrorMessage(error.message ?? 'Something else went wrong.');
 				})
 				.finally(() => {
