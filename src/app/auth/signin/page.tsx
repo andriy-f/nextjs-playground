@@ -1,9 +1,10 @@
-import SignInFormOnRHF from "@/features/auth/signInFormOnRHF"
+// import SignInFormOnRHF from "@/features/auth/signInFormOnRHF"
+import SignInFormStd from "@/features/auth/signInFormStd"
 
 const SignInPage = () => {
 	return (
 		<div className="mx-auto max-w-sm">
-			<SignInFormOnRHF />
+			<SignInFormStd />
 		</div>
 	)
 }

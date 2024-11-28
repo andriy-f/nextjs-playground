@@ -10,17 +10,28 @@ const areValidCredentials = ({ email, password }: { email: string, password: str
 	return email === 'root@gmail.info' && password === 'Arthur there'
 }
 
+const signInPagePath = '/auth/signin'
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: {
-		signIn: '/auth/signin',
+		signIn: signInPagePath,
 	},
 	callbacks: {
 		// The authorized callback is used to verify if the request is authorized to access a page via Next.js Middleware.
 		authorized({ auth, request: { nextUrl } }) {
-			const isLoggedIn = !!auth?.user;
+			const isSignedIn = !!auth?.user;
+			const isOnSignInPage = nextUrl.pathname.startsWith(signInPagePath);
 			const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-			if (isOnDashboard) {
-				return isLoggedIn;
+			if (isOnSignInPage) {
+				// works if using signInFormStd
+				if (isSignedIn) {
+					console.log('attempt redirect form signin. O', nextUrl.origin)
+					return Response.redirect(new URL('/dashboard', nextUrl.origin));
+				} else {
+					return true
+				}
+			} else if (isOnDashboard) {
+				return isSignedIn;
 				// if (isLoggedIn) return true;
 				// return false; // Redirect unauthenticated users to login page
 				// } else if (isLoggedIn) {

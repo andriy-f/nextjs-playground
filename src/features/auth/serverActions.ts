@@ -3,26 +3,31 @@
 import { signIn, signOut } from './auth';
 import { AuthError } from 'next-auth';
 
+type SignInFormState = {
+	emailError?: string
+	passwordError?: string
+	generalError?: string
+}
+
 /**
  * server action for sign-in form (used via useActionState)
- * TODO: delete because unused
  */
 export async function signInAction(
-	_prevState: string | undefined,
+	_prevState: SignInFormState | undefined,
 	formData: FormData,
-) {
+): Promise<SignInFormState> {
 	try {
 		await signIn('credentials', formData);
-		// if signIn is successful, then NEXT_REDIRECT is thrown
+		return {}
 	} catch (error) {
 		if (error instanceof AuthError) {
 			// AuthError from NextAuth.js
 			// Expected user error, like invalid credentials
 			switch (error.type) {
 				case 'CredentialsSignin':
-					return 'Invalid credentials.';
+					return { generalError: 'Invalid credentials.' };
 				default:
-					return 'Something went wrong.';
+					return { generalError: 'Something went wrong.' };
 			}
 		} else {
 			// Unexpected error, so re-throw
