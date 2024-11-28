@@ -14,7 +14,7 @@ const PInput: React.FC<PInputProps> = ({ label, icon, ...props }) => {
 				{label}
 				<div className="relative">
 					<input
-						className="block w-full rounded-md border py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+						className="pl-10 block w-full rounded-md border py-1 text-sm outline-2 placeholder:text-gray-500"
 						{...props} />
 					{icon}
 				</div>
