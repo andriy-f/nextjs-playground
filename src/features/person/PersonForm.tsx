@@ -3,8 +3,8 @@
 import React, { useState, useId } from 'react'
 import { Formik, Form } from 'formik'
 
-import FormikCustomInput from '@/components/FormikCustomInput'
-import FormikCustomSelect from '@/components/FormikCustomSelect'
+import FormikCustomInput from '@/shared/components/FormikCustomInput'
+import FormikCustomSelect from '@/shared/components/FormikCustomSelect'
 import { addPersonChoice2 } from '@/features/person/actions'
 import { lifePaths, personProps, PersonSaveResult, personValidationSchema } from '@/features/person/types'
 

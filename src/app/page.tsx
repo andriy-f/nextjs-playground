@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from 'next/link'
-import MyCaption from "../components/MyCaption";
+import MyCaption from "../shared/components/MyCaption";
 
 const NavLinks = [
 	{ href: "/person", label: "Person", description: "Person sample with Formik" },
