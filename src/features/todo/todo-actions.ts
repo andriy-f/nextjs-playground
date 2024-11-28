@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import prisma from '@/db'
-import { AddTodoFormValues } from '@/types';
+import { AddTodoFormValues } from '@/shared/types';
 
 export const addTodo = async (oldState: object, { title }: AddTodoFormValues) => {
 	await prisma.todo.create({

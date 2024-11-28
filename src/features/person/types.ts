@@ -1,4 +1,4 @@
-import { propertiesOf, proxiedPropertiesOf } from '@/types'
+import { propertiesOf, proxiedPropertiesOf } from '@/shared/types'
 import * as yup from 'yup'
 import { Result } from '@/features/common/result'
 

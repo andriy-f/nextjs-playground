@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup'
 
 import { addTodo } from '@/features/todo/todo-actions';
-import { AddTodoFormValues } from '@/types';
+import { AddTodoFormValues } from '@/shared/types';
 
 const validationSchema = yup.object({
 	title: yup.string().required(),
