@@ -1,17 +1,15 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { signOutAction } from "@/features/auth/serverActions";
+import clsx from 'clsx';
+import NavLink from '@/shared/ui/NavLink';
 
 const navigation = [
-	{ name: 'Home', href: '/', current: false },
-	{ name: 'Dashboard', href: '/dashboard', current: true },
-	{ name: 'SignIn', href: '/auth/signin', current: false },
-	{ name: 'Calendar', href: '#', current: false },
+	{ name: 'Home', href: '/' },
+	{ name: 'Dashboard', href: '/dashboard' },
+	{ name: 'SignIn', href: '/auth/signin' },
+	{ name: 'Todo', href: '/todo-list' },
 ]
-
-function classNames(...classes: string[]) {
-	return classes.filter(Boolean).join(' ')
-}
 
 export default function Navbar() {
 	return (
@@ -37,20 +35,19 @@ export default function Navbar() {
 								className="h-8 w-auto"
 							/> */}
 						</div>
+						{/* Desktop menu */}
 						<div className="hidden sm:ml-6 sm:block">
 							<div className="flex space-x-4">
 								{navigation.map((item) => (
-									<a
+									<NavLink
 										key={item.name}
 										href={item.href}
-										aria-current={item.current ? 'page' : undefined}
-										className={classNames(
-											item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-											'rounded-md px-3 py-2 text-sm font-medium',
-										)}
+										className='rounded-md px-3 py-2 text-sm font-medium'
+										activeClassName='bg-gray-900 text-white'
+										nonActiveClassName='text-gray-300 hover:bg-gray-700 hover:text-white'
 									>
 										{item.name}
-									</a>
+									</NavLink>
 								))}
 							</div>
 						</div>
@@ -121,6 +118,7 @@ export default function Navbar() {
 				</div>
 			</div>
 
+			{/* Mobile menu, show/hide based on menu state. */}
 			<DisclosurePanel className="sm:hidden">
 				<div className="space-y-1 px-2 pb-3 pt-2">
 					{navigation.map((item) => (
@@ -128,9 +126,9 @@ export default function Navbar() {
 							key={item.name}
 							as="a"
 							href={item.href}
-							aria-current={item.current ? 'page' : undefined}
-							className={classNames(
-								item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+							aria-current={false ? 'page' : undefined}
+							className={clsx(
+								false ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
 								'block rounded-md px-3 py-2 text-base font-medium',
 							)}
 						>
