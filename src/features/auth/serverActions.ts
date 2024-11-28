@@ -12,6 +12,7 @@ export async function signInAction(
 ) {
 	try {
 		await signIn('credentials', formData);
+		// if signIn is successful, then NEXT_REDIRECT is thrown
 	} catch (error) {
 		if (error instanceof AuthError) {
 			// AuthError from NextAuth.js
