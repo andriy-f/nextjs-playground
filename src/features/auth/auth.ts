@@ -5,28 +5,27 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from "./validation"
+import { sitePaths } from "../shared/sitePaths"
 
 const areValidCredentials = ({ email, password }: { email: string, password: string }) => {
 	return email === 'root@gmail.info' && password === 'Arthur there'
 }
 
-const signInPagePath = '/auth/signin'
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: {
-		signIn: signInPagePath,
+		signIn: sitePaths.signIn.href,
 	},
 	callbacks: {
 		// The authorized callback is used to verify if the request is authorized to access a page via Next.js Middleware.
 		authorized({ auth, request: { nextUrl } }) {
 			const isSignedIn = !!auth?.user;
-			const isOnSignInPage = nextUrl.pathname.startsWith(signInPagePath);
+			const isOnSignInPage = nextUrl.pathname.startsWith(sitePaths.signIn.href);
 			const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
 			if (isOnSignInPage) {
 				// works if using signInFormStd
 				if (isSignedIn) {
-					console.log('attempt redirect form signin. O', nextUrl.origin)
-					return Response.redirect(new URL('/dashboard', nextUrl.origin));
+					// TODO redirect to callbackUrl instead of profile
+					return Response.redirect(new URL('/profile', nextUrl.origin));
 				} else {
 					return true
 				}

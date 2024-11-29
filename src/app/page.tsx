@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from 'next/link'
 import MyCaption from "../shared/components/MyCaption";
+import { sitePaths } from "@/features/shared/sitePaths";
 
 const NavLinks = [
 	{ href: "/person", label: "Person", description: "Person sample with Formik" },
 	{ href: "/server-side-forms", label: "Server side forms", description: "Server side forms" },
 	{ href: "/server-actions", label: "Client forms", description: "Client side forms" },
-	{ href: "/todo-list", label: "Todo list", description: "Todo list" },
-	{ href: "/inactivity-detector", label: "Inactivity Detector", description: "Detects when user is inactive for some time." },
+	{ href: sitePaths.todo.href, label: sitePaths.todo.name, description: "Todo list" },
+	{ href: sitePaths.inactivityDetector.href, label: sitePaths.inactivityDetector.name, description: "Detects when user is inactive for some time." },
 ];
 
 export default function Home() {

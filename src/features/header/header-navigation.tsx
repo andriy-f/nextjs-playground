@@ -1,5 +1,7 @@
+import { sitePaths } from "../shared/sitePaths";
+
 export const headerNavigation = [
-	{ name: 'Home', href: '/' },
-	{ name: 'Dashboard', href: '/dashboard' },
-	{ name: 'Todo', href: '/todo-list' },
+	{ name: sitePaths.home.name, href: sitePaths.home.href },
+	{ name: sitePaths.dashboard.name, href: sitePaths.dashboard.href },
+	{ name: sitePaths.todo.name, href: sitePaths.todo.href },
 ];
