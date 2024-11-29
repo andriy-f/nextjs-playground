@@ -36,7 +36,7 @@ export default function SignInFormStd() {
 					<PFormField
 						label="Email"
 						icon={<AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
-						fieldError={formState?.emailError}
+						fieldError={formState?.fieldErrors?.email?.join(' ')}
 						required
 						name='email'
 					/>
@@ -44,7 +44,7 @@ export default function SignInFormStd() {
 						label="Password"
 						type="password"
 						icon={<KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
-						fieldError={formState?.passwordError}
+						fieldError={formState?.fieldErrors?.password?.join(' ')}
 						required
 						name='password'
 					/>
@@ -57,10 +57,10 @@ export default function SignInFormStd() {
 					aria-live="polite"
 					aria-atomic="true"
 				>
-					{formState?.generalError && (
+					{formState?.genericError && (
 						<>
 							<ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-							<p className="text-sm text-red-500">{formState.generalError}</p>
+							<p className="text-sm text-red-500">{formState.genericError}</p>
 						</>
 					)}
 				</div>

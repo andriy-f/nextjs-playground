@@ -2,11 +2,14 @@
 
 import { signIn, signOut } from './auth';
 import { AuthError } from 'next-auth';
+import { signInSchema } from './validation';
 
 type SignInFormState = {
-	emailError?: string
-	passwordError?: string
-	generalError?: string
+	fieldErrors?: {
+		email?: string[]
+		password?: string[]
+	},
+	genericError?: string
 }
 
 /**
@@ -17,17 +20,22 @@ export async function signInAction(
 	formData: FormData,
 ): Promise<SignInFormState> {
 	try {
-		await signIn('credentials', formData);
-		return {}
+		const { success, data, error } = await signInSchema.safeParseAsync(Object.fromEntries(formData))
+		if (success) {
+			await signIn('credentials', data);
+			return {};
+		} else {
+			return { fieldErrors: error.flatten().fieldErrors };
+		}
 	} catch (error) {
 		if (error instanceof AuthError) {
 			// AuthError from NextAuth.js
 			// Expected user error, like invalid credentials
 			switch (error.type) {
 				case 'CredentialsSignin':
-					return { generalError: 'Invalid credentials.' };
+					return { genericError: 'Invalid credentials.' };
 				default:
-					return { generalError: 'Something went wrong.' };
+					return { genericError: 'Something went wrong.' };
 			}
 		} else {
 			// Unexpected error, so re-throw
