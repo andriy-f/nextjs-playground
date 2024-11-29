@@ -1,7 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { auth } from "@/features/auth/auth"
-import clsx from 'clsx';
 import NavLink from '@/shared/ui/NavLink';
 import Link from 'next/link'
 import Image from 'next/image'
