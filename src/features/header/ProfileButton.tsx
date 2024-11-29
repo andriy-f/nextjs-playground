@@ -7,7 +7,7 @@ import { sitePaths } from '../shared/sitePaths';
 
 const profileLinks = [
 	{ name: sitePaths.profile.name, href: sitePaths.profile.href },
-	// { name: sitePaths.signOut.name, href: sitePaths.signOut.href },
+	{ name: sitePaths.signOut.name, href: sitePaths.signOut.href },
 ]
 
 const ProfileButton: React.FC = () => {
@@ -38,7 +38,7 @@ const ProfileButton: React.FC = () => {
 					className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none w-full text-left "
 					onClick={signOutAction}
 				>
-					Sign out now
+					Sign out immediately
 				</MenuItem>
 			</MenuItems>
 		</Menu >
