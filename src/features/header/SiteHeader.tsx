@@ -2,11 +2,11 @@ import { Disclosure, DisclosureButton, DisclosurePanel, CloseButton } from '@hea
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { auth } from "@/features/auth/auth"
 import NavLink from '@/shared/ui/NavLink';
-import Link from 'next/link'
 import Image from 'next/image'
 import { headerNavigation } from './header-navigation';
 import NotificationButton from './NotificationButton';
 import ProfileButton from './ProfileButton';
+import SiteNavLink from '@/shared/ui/SiteNavLink';
 
 export default async function Navbar() {
 	const session = await auth()
@@ -42,15 +42,12 @@ export default async function Navbar() {
 						<div className="hidden sm:ml-6 sm:block">
 							<div className="flex space-x-4">
 								{headerNavigation.map((item) => (
-									<NavLink
+									<SiteNavLink
 										key={item.name}
 										href={item.href}
-										className='rounded-md px-3 py-2 text-sm font-medium'
-										activeClassName='bg-gray-900 text-white'
-										nonActiveClassName='text-gray-300 hover:bg-gray-700 hover:text-white'
 									>
 										{item.name}
-									</NavLink>
+									</SiteNavLink>
 								))}
 							</div>
 						</div>
@@ -62,7 +59,7 @@ export default async function Navbar() {
 							<NotificationButton />
 							<ProfileButton />
 						</div>
-					) : <Link href="/auth/signin">Sign in</Link>}
+					) : <SiteNavLink href="/auth/signin">Sign in</SiteNavLink>}
 				</div>
 			</div>
 
