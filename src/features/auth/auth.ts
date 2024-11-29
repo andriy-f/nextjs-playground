@@ -2,6 +2,7 @@
 // This file is used to configure NextAuth.js
 // https://next-auth.js.org/configuration/options
 // This file can be placed anywhere in your project.
+import { NextResponse } from "next/server"
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from "./validation"
@@ -18,9 +19,19 @@ const protectedRoutes = [
 
 const isOnProtectedRoute = (pathname: string) => protectedRoutes.some(route => pathname.startsWith(route))
 
+const getCallbackUrl = (nextUrl: URL) => {
+	const searchParams = new URLSearchParams(nextUrl.search)
+	return searchParams.get('callbackUrl')
+}
+
+const validateCallbackUrl = (callbackUrl: string, nextUrl: URL) => {
+	return callbackUrl.startsWith(nextUrl.origin)
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: {
 		signIn: sitePaths.signIn.href,
+		signOut: sitePaths.signOut.href,
 	},
 	callbacks: {
 		// The authorized callback is used to verify if the request is authorized to access a page via Next.js Middleware.
@@ -31,10 +42,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			if (isOnSignInPage) {
 				// works if using signInFormStd
 				if (isSignedIn) {
-					// TODO redirect to callbackUrl instead of profile
-					return Response.redirect(new URL('/profile', nextUrl.origin));
+					// Redirect to callbackUrl if it's valid
+					const callbackUrl = getCallbackUrl(nextUrl);
+					const isValidCallbackUrl = callbackUrl && validateCallbackUrl(callbackUrl, nextUrl);
+					const redirectTo = isValidCallbackUrl ? callbackUrl : '/';
+					const redirectToUrl = new URL(redirectTo, nextUrl.origin);
+					return NextResponse.redirect(redirectToUrl);
 				} else {
-					return true
+					return true // stay on sign in page
 				}
 			} else if (onProtectedRoute) {
 				return isSignedIn;
