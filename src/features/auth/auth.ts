@@ -8,8 +8,24 @@ import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from "./validation"
 import { sitePaths } from "../shared/sitePaths"
 
-const areValidCredentials = ({ email, password }: { email: string, password: string }) => {
-	return email === 'root@gmail.info' && password === 'Arthur there'
+const findUserWithCredentials = async ({ email, password }: { email: string, password: string }) => {
+	const rootEmail = 'root@gmail.info'
+	const rootPass = 'Gopala'
+
+	const simpleUserEmail = 'user1@gmail.info'
+	const simpleUserPass = 'Haribol'
+
+	if (email === rootEmail && password === rootPass)
+		return {
+			email: rootEmail,
+			permissions: ['canSeePhoneNumber', 'dashboard', 'todos']
+		}
+	else if (email === simpleUserEmail && password === simpleUserPass)
+		return {
+			email: simpleUserEmail,
+			permissions: []
+		}
+	else return null
 }
 
 const protectedRoutes = [
@@ -75,9 +91,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				if (success) {
 					// Credentials are valid according to schema
 					const { email, password } = data
-					return areValidCredentials({ email, password })
-						? { email: email } // User is authenticated
-						: null // Invalid credentials
+					return findUserWithCredentials({ email, password })
 				} else {
 					// Credentials or whatever user entered doesn't match schema
 					return null
