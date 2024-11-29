@@ -9,7 +9,7 @@ function canSeeUsername(_viewer: User) {
 }
 
 function canSeePhoneNumber(viewer: User) {
-	return viewer.permissions.includes('canSeePhoneNumber')
+	return viewer.permissions?.includes('canSeePhoneNumber') ?? false
 }
 
 export async function getUserProfileDTO(_slug: string) {

@@ -21,6 +21,7 @@ export const getCurrentUser = cache(async () => {
 
 	try {
 		const user = session.user
+		// todo: here was expected to be a call to the backend to get actual user data, actual permissions, etc.
 
 		return user
 	} catch (error) {
@@ -28,3 +29,11 @@ export const getCurrentUser = cache(async () => {
 		return null
 	}
 })
+
+export const viewerHasPermissions = async (permissions: string[]) => {
+	const user = await getCurrentUser()
+
+	console.log('user', user)
+
+	return user ? permissions.every((permission) => user.permissions?.includes(permission)) : false
+}

@@ -1,16 +1,17 @@
-import { auth } from '@/features/auth/auth'
+import NotAuthorized from '@/features/auth/NotAuthorized'
+import { viewerHasPermissions } from '@/features/shared/dal'
 
 const Page = async () => {
-	const session = await auth()
-	return (
+	const isAuthorized = await viewerHasPermissions(['canSeeDashboard'])
+
+	return isAuthorized ? (
 		<div>
 			<h1>Dashboard</h1>
 			<p>
 				This is a dashboard page, supposedly protected by authentication.
 			</p>
-			<pre>{JSON.stringify(session, null, 2)}</pre>
 		</div>
-	)
+	) : <NotAuthorized />
 }
 
 export default Page
