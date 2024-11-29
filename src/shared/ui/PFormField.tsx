@@ -1,15 +1,20 @@
 import React from 'react';
+import ErrorUnderInput from './ErrorUnderInput';
 
 interface PInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
 	icon?: React.ReactNode;
+	fieldError?: string;
 }
 
-const PInput: React.FC<PInputProps> = ({ label, icon, ...props }) => {
+/**
+ * FormField styled for this project 
+ */
+const PFormField: React.FC<PInputProps> = ({ label, icon, fieldError, ...props }) => {
 	return (
-		<>
+		<div>
 			<label
-				className="mb-3 mt-5 block text-xs font-medium"
+				className="mb-3 mt-5 block text-xs font-medium leading-6 text-blue-600"
 			>
 				{label}
 				<div className="relative">
@@ -19,8 +24,11 @@ const PInput: React.FC<PInputProps> = ({ label, icon, ...props }) => {
 					{icon}
 				</div>
 			</label>
-		</>
+			<ErrorUnderInput>
+				{fieldError ?? 'test'}
+			</ErrorUnderInput>
+		</div>
 	);
 };
 
-export default PInput;
+export default PFormField;

@@ -11,8 +11,7 @@ import {
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { lusitana } from '@/features/shared/ui/fonts';
 import { Button } from '@/features/shared/ui/button';
-import PInput from '@/shared/ui/PInputWithLabel';
-import ErrorUnderInput from '@/shared/ui/ErrorUnderInput';
+import PFormField from '@/shared/ui/PFormField';
 import { signInAction } from './serverActions';
 
 /**
@@ -34,29 +33,21 @@ export default function SignInFormStd() {
 					Please log in to continue.
 				</h1>
 				<div className="w-full space-y-1">
-					<div>
-						<PInput
-							label="Email"
-							icon={<AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
-							required
-							name='email'
-						/>
-						<ErrorUnderInput>
-							{formState?.emailError}
-						</ErrorUnderInput>
-					</div>
-					<div>
-						<PInput
-							label="Password"
-							type="password"
-							icon={<KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
-							required
-							name='password'
-						/>
-						<ErrorUnderInput>
-							{formState?.passwordError}
-						</ErrorUnderInput>
-					</div>
+					<PFormField
+						label="Email"
+						icon={<AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
+						fieldError={formState?.emailError}
+						required
+						name='email'
+					/>
+					<PFormField
+						label="Password"
+						type="password"
+						icon={<KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
+						fieldError={formState?.passwordError}
+						required
+						name='password'
+					/>
 				</div>
 				<Button className="mt-4 w-full" aria-disabled={isPending}>
 					Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />

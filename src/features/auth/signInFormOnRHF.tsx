@@ -15,8 +15,7 @@ import { lusitana } from '@/features/shared/ui/fonts';
 import { Button } from '@/features/shared/ui/button';
 import { signIn } from 'next-auth/react'
 import { signInSchema } from '@/features/auth/validation';
-import PInput from '@/shared/ui/PInputWithLabel';
-import ErrorUnderInput from '@/shared/ui/ErrorUnderInput';
+import PFormField from '@/shared/ui/PFormField';
 import { useRouter } from 'next/navigation';
 
 /**
@@ -79,27 +78,19 @@ export default function SignInFormOnRHF() {
 					Please log in to continue.
 				</h1>
 				<div className="w-full space-y-1">
-					<div>
-						<PInput
-							label="Email"
-							icon={<AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
-							{...register('email')}
-						/>
-						<ErrorUnderInput>
-							{formState.errors.email?.message?.toString()}
-						</ErrorUnderInput>
-					</div>
-					<div>
-						<PInput
-							label="Password"
-							type="password"
-							icon={<KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
-							{...register('password')}
-						/>
-						<ErrorUnderInput>
-							{formState.errors.password?.message?.toString()}
-						</ErrorUnderInput>
-					</div>
+					<PFormField
+						label="Email"
+						icon={<AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
+						fieldError={formState.errors.email?.message?.toString()}
+						{...register('email')}
+					/>
+					<PFormField
+						label="Password"
+						type="password"
+						icon={<KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2" />}
+						fieldError={formState.errors.password?.message?.toString()}
+						{...register('password')}
+					/>
 				</div>
 				<Button className="mt-4 w-full" aria-disabled={isPending}>
 					Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
