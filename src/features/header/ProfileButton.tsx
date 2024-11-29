@@ -2,6 +2,12 @@ import React from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { signOutAction } from "@/features/auth/serverActions";
+import Link from 'next/link'
+
+const profileLinks = [
+	{ name: 'Profile', href: '/profile' },
+	{ name: 'Sign out', href: '/auth/signout' },
+]
 
 const ProfileButton: React.FC = () => {
 	return (
@@ -17,37 +23,21 @@ const ProfileButton: React.FC = () => {
 				transition
 				className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
 			>
-				<MenuItem>
-					<a
-						href="#"
-						className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-					>
-						Your Profile
-					</a>
-				</MenuItem>
-				<MenuItem>
-					<a
-						href="#"
-						className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-					>
-						Settings
-					</a>
-				</MenuItem>
-				<MenuItem>
-					<a
-						href="/auth/signout"
-						className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-					>
-						Sign out
-					</a>
-				</MenuItem>
-				<MenuItem>
-					<button
-						className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-						onClick={signOutAction}
-					>
-						Sign out immediately
-					</button>
+				{profileLinks.map((item) => (
+					<MenuItem key={item.name}>
+						<Link
+							href={item.href}
+							className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+						>
+							{item.name}
+						</Link>
+					</MenuItem>))}
+				<MenuItem
+					as="button"
+					className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none w-full text-left "
+					onClick={signOutAction}
+				>
+					Sign out now
 				</MenuItem>
 			</MenuItems>
 		</Menu >
