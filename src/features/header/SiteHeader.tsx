@@ -1,4 +1,4 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, CloseButton } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { auth } from "@/features/auth/auth"
 import NavLink from '@/shared/ui/NavLink';
@@ -70,7 +70,7 @@ export default async function Navbar() {
 			<DisclosurePanel className="sm:hidden">
 				<div className="space-y-1 px-2 pb-3 pt-2">
 					{headerNavigation.map((item) => (
-						<DisclosureButton
+						<CloseButton
 							key={item.name}
 							as={NavLink}
 							href={item.href}
@@ -79,7 +79,7 @@ export default async function Navbar() {
 							nonActiveClassName='text-gray-300 hover:bg-gray-700 hover:text-white'
 						>
 							{item.name}
-						</DisclosureButton>
+						</CloseButton>
 					))}
 				</div>
 			</DisclosurePanel>
