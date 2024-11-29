@@ -38,6 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		authorized({ auth, request: { nextUrl } }) {
 			const isSignedIn = !!auth?.user;
 			const isOnSignInPage = nextUrl.pathname.startsWith(sitePaths.signIn.href);
+			const isOnSignOutPage = nextUrl.pathname.startsWith(sitePaths.signOut.href);
 			const onProtectedRoute = isOnProtectedRoute(nextUrl.pathname);
 			if (isOnSignInPage) {
 				// works if using signInFormStd
@@ -51,6 +52,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				} else {
 					return true // stay on sign in page
 				}
+			} else if (isOnSignOutPage) {
+				if (isSignedIn) return true
+				else return NextResponse.redirect(new URL('/', nextUrl.origin))
 			} else if (onProtectedRoute) {
 				return isSignedIn;
 			} else {
