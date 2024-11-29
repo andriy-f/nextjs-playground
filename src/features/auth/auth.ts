@@ -11,6 +11,13 @@ const areValidCredentials = ({ email, password }: { email: string, password: str
 	return email === 'root@gmail.info' && password === 'Arthur there'
 }
 
+const protectedRoutes = [
+	sitePaths.dashboard.href,
+	sitePaths.profile.href,
+]
+
+const isOnProtectedRoute = (pathname: string) => protectedRoutes.some(route => pathname.startsWith(route))
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: {
 		signIn: sitePaths.signIn.href,
@@ -20,7 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		authorized({ auth, request: { nextUrl } }) {
 			const isSignedIn = !!auth?.user;
 			const isOnSignInPage = nextUrl.pathname.startsWith(sitePaths.signIn.href);
-			const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
+			const onProtectedRoute = isOnProtectedRoute(nextUrl.pathname);
 			if (isOnSignInPage) {
 				// works if using signInFormStd
 				if (isSignedIn) {
@@ -29,12 +36,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				} else {
 					return true
 				}
-			} else if (isOnDashboard) {
+			} else if (onProtectedRoute) {
 				return isSignedIn;
-				// if (isLoggedIn) return true;
-				// return false; // Redirect unauthenticated users to login page
-				// } else if (isLoggedIn) {
-				// 	return Response.redirect(new URL('/dashboard', nextUrl));
 			} else {
 				return true;
 			}

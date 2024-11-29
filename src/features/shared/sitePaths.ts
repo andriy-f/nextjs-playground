@@ -1,4 +1,3 @@
-
 export type SitePath = {
 	name: string;
 	href: string;
@@ -8,6 +7,10 @@ export const sitePaths = {
 	signIn: {
 		name: 'Sign In',
 		href: '/auth/signin',
+	},
+	signOut: {
+		name: 'Sign Out',
+		href: '/auth/signout',
 	},
 	home: {
 		name: 'Home',

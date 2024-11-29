@@ -3,10 +3,11 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import { signOutAction } from "@/features/auth/serverActions";
 import Link from 'next/link'
+import { sitePaths } from '../shared/sitePaths';
 
 const profileLinks = [
-	{ name: 'Profile', href: '/profile' },
-	{ name: 'Sign out', href: '/auth/signout' },
+	{ name: sitePaths.profile.name, href: sitePaths.profile.href },
+	// { name: sitePaths.signOut.name, href: sitePaths.signOut.href },
 ]
 
 const ProfileButton: React.FC = () => {
