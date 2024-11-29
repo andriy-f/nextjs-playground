@@ -14,7 +14,7 @@ const PFormField: React.FC<PInputProps> = ({ label, icon, fieldError, ...props }
 	return (
 		<div>
 			<label
-				className="mb-3 mt-5 block text-xs font-medium leading-6 text-blue-600"
+				className="mb-3 mt-5 block text-xs font-medium leading-8"
 			>
 				{label}
 				<div className="relative">
