@@ -10,10 +10,10 @@ import { sitePaths } from "../shared/sitePaths"
 
 const findUserWithCredentials = async ({ email, password }: { email: string, password: string }) => {
 	const rootEmail = 'root@gmail.info'
-	const rootPass = 'Gopala'
+	const rootPass = 'Hello Gopala'
 
 	const simpleUserEmail = 'user1@gmail.info'
-	const simpleUserPass = 'Haribol'
+	const simpleUserPass = 'Haribol!'
 
 	if (email === rootEmail && password === rootPass)
 		return {
@@ -91,7 +91,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				if (success) {
 					// Credentials are valid according to schema
 					const { email, password } = data
-					return findUserWithCredentials({ email, password })
+					const user = await findUserWithCredentials({ email, password })
+					console.log('authed user', user)
+					return user
 				} else {
 					// Credentials or whatever user entered doesn't match schema
 					return null
