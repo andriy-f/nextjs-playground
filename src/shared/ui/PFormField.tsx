@@ -25,7 +25,7 @@ const PFormField: React.FC<PInputProps> = ({ label, icon, fieldError, ...props }
 				</div>
 			</label>
 			<ErrorUnderInput>
-				{fieldError ?? 'test'}
+				{fieldError}
 			</ErrorUnderInput>
 		</div>
 	);
