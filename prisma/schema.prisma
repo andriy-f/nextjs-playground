@@ -14,16 +14,27 @@ datasource db {
 }
 
 model User {
-  id    Int       @id @default(autoincrement())
-  email String    @unique
-  name  String?
-  tags  UserTag[]
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  roles        Role[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
-model UserTag {
-  id    Int    @id @default(autoincrement())
-  name  String
-  users User[]
+model Permission {
+  code        String  @id
+  description String?
+  roles       Role[]
+}
+
+model Role {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  description String?
+  users       User[]
+  permissions Permission[]
 }
 
 model Todo {
