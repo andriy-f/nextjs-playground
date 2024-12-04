@@ -23,7 +23,7 @@ export default async function Page() {
 	const todos = await prisma.todo.findMany();
 
 	return (
-		<div className='flex flex-col items-center justify-center h-screen'>
+		<div className='flex flex-col items-center justify-center'>
 			<h1 className='text-4xl font-bold'>Todos</h1>
 			<AddTodo />
 			<div className='mt-5'>
