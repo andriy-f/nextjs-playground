@@ -28,10 +28,11 @@ export const partialAuthConfig = {
 	callbacks: {
 		// The authorized callback is used to verify if the request is authorized to access a page via Next.js Middleware.
 		authorized({ auth, request: { nextUrl } }) {
-			const isSignedIn = !!auth?.user;
+			const isSignedIn = !!auth?.user; // TODO some user, but not necessarily having up-to-date data with DB
 			const isOnSignInPage = nextUrl.pathname.startsWith(sitePaths.signIn.href);
 			const isOnSignOutPage = nextUrl.pathname.startsWith(sitePaths.signOut.href);
 			const onProtectedRoute = isOnProtectedRoute(nextUrl.pathname);
+
 			if (isOnSignInPage) {
 				// works if using signInFormStd
 				if (isSignedIn) {
