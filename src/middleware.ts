@@ -4,6 +4,8 @@
 // modifying the request or response headers, or responding directly.
 
 // Middleware runs before cached content and routes are matched. See Matching Paths for more details.
+// Middleware is running in limited environment, so called "Edge", so it can't handle bcrypt. 
+// See https://nextjs.org/learn/dashboard-app/adding-authentication#password-hashing
 
 // See https://nextjs.org/docs/app/building-your-application/routing/middleware#convention
 // Use the file middleware.ts (or .js) in the root of your project to define Middleware. 
@@ -11,7 +13,8 @@
 
 // import { type NextRequest, NextResponse } from "next/server";
 
-import { auth } from "@/features/auth/auth";
+import NextAuth from "next-auth"
+import { partialAuthConfig } from "@/features/auth/auth.config";
 
 // Correct?
 // export const middleware = auth(async (request: NextRequest) => {
@@ -26,7 +29,7 @@ import { auth } from "@/features/auth/auth";
 //   console.log(req.auth) //  { session: { user: { ... } } }
 // })
 
-export const middleware = auth
+export const middleware = NextAuth(partialAuthConfig).auth;
 
 export const config = {
 	// https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
