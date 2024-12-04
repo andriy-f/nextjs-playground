@@ -15,6 +15,16 @@ export const verifySession = cache(async () => {
 	}
 })
 
+export const requireAuthentication = cache(async () => {
+	const session = await auth()
+
+	if (!session?.user) {
+		redirect('/login')
+	} else {
+		return session.user
+	}
+})
+
 export const getCurrentUser = cache(async () => {
 	const session = await verifySession()
 	if (!session) return null
