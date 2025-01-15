@@ -56,7 +56,7 @@ const seedRoles = async () => {
 }
 
 const seedUsers = async () => {
-	const passHash1 = '$2b$10$l.JNwn7.CSh6qu4anbj2YeRvXDijRztQLj5QcINoZHxrFvn6LbF6G'
+	const passHash1 = '$2b$10$eYijkbhGJg4C/D0YRHABqedX/J0cMCYpXUmYpA1vdYs1CQNXlo.UK'
 
 	await prisma.user.upsert({
 		where: { email: 'bob@example.com' },
@@ -79,7 +79,7 @@ const seedUsers = async () => {
 		}
 	})
 
-	const passHash2 = '$2b$10$tig8bWjsnsixUr7IfpDqieNIR.m4rlCC9UUcixuuF25B0cMRtpB8W'
+	const passHash2 = '$2b$10$BEe2iLDMmcWvmjjR34GP0.MeZhoi0ax3Trc9L.BqFrEaHYymuIuea'
 	await prisma.user.upsert({
 		where: { email: 'alice@example.com' },
 		update: {
