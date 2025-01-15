@@ -9,7 +9,6 @@ export const verifySession = cache(async () => {
 
 	if (!session?.user) {
 		redirect('/login')
-		return { authenticated: false, user: null }
 	} else {
 		return { authenticated: true, user: session.user }
 	}
@@ -43,7 +42,7 @@ export const getCurrentUser = cache(async () => {
 export const viewerHasPermissions = async (permissions: string[]) => {
 	const user = await getCurrentUser()
 
-	console.log('user', user)
+	// console.log('user', user)
 
 	return user ? permissions.every((permission) => user.permissions?.includes(permission)) : false
 }
