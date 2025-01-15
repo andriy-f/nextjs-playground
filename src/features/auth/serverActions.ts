@@ -39,6 +39,7 @@ export async function signInAction(
 			}
 		} else {
 			// Unexpected error, so re-throw
+			console.log('unexpected error, so re-throw')
 			throw error;
 		}
 	}

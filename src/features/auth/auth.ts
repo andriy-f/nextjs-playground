@@ -26,7 +26,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 					// Credentials are valid according to schema
 					const { email, password } = data
 					const user = await findUserByCredentials({ email, password })
-					console.log('authed user', user)
 					return user
 				} else {
 					// Credentials or whatever user entered doesn't match schema
