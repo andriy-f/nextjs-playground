@@ -3,16 +3,7 @@ import 'server-only'
 import { auth } from '@/features/auth/auth'
 import { redirect } from 'next/navigation'
 import { cache } from 'react'
-
-export const verifySession = cache(async () => {
-	const session = await auth()
-
-	if (!session?.user) {
-		redirect('/login')
-	} else {
-		return { authenticated: true, user: session.user }
-	}
-})
+import { CurrentUser, findUser } from '../user/user'
 
 export const requireAuthentication = cache(async () => {
 	const session = await auth()
@@ -24,15 +15,19 @@ export const requireAuthentication = cache(async () => {
 	}
 })
 
-export const getCurrentUser = cache(async () => {
-	const session = await verifySession()
-	if (!session) return null
+export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
+	const user = await requireAuthentication()
+	if (!user) return null
 
 	try {
-		const user = session.user
-		// todo: here was expected to be a call to the backend to get actual user data, actual permissions, etc.
+		const userFull = await findUser(user.id)
 
-		return user
+		return {
+			id: user.id,
+			permissions: userFull?.roles.flatMap((role) => role.permissions.map((permission) => permission.code)) ?? [],
+			email: user.email,
+			name: user.name,
+		}
 	} catch (error) {
 		console.log('Failed to fetch user', error)
 		return null

@@ -1,14 +1,14 @@
 import 'server-only'
 import { getCurrentUser } from '@/features/shared/dal'
-import { type User } from 'next-auth'
+import { type CurrentUser } from '@/features/user/user'
 
 // type User = Session["user"]
 
-function canSeeUsername(_viewer: User) {
+function canSeeUsername(_viewer: CurrentUser) {
 	return true
 }
 
-function canSeePhoneNumber(viewer: User) {
+function canSeePhoneNumber(viewer: CurrentUser) {
 	return viewer.permissions?.includes('canSeePhoneNumber') ?? false
 }
 

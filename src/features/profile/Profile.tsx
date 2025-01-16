@@ -20,14 +20,14 @@ const Profile: React.FC = async () => {
 				<input
 					className='block'
 					type="text"
-					defaultValue={userData.email ?? undefined} readOnly />
+					defaultValue={userData.email} readOnly />
 			</PLabel>
 			<PLabel>
 				name
 				<input
 					className='block'
 					type="text"
-					defaultValue={userData.name ?? undefined} readOnly />
+					defaultValue={userData.name} readOnly />
 			</PLabel>
 		</div>
 	);
