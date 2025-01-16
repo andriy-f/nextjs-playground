@@ -5,13 +5,13 @@ import { User } from '@prisma/client'
 export interface SessionUser {
 	id: string
 	email: string
-	name: string
+	name?: string
 }
 
 export interface CurrentUser {
 	id: string
 	email: string
-	name: string
+	name?: string
 	permissions: string[]
 }
 
@@ -43,6 +43,9 @@ export const findUser = async (userId: string) => {
 			id: userId,
 		},
 		select: {
+			id: true,
+			email: true,
+			name: true,
 			roles: {
 				select: {
 					permissions: {

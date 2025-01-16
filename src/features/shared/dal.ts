@@ -22,14 +22,14 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
 	try {
 		const userFull = await findUser(user.id)
 
-		return {
+		return userFull ? {
 			id: user.id,
 			permissions: userFull?.roles.flatMap((role) => role.permissions.map((permission) => permission.code)) ?? [],
 			email: user.email,
 			name: user.name,
-		}
-	} catch (error) {
-		console.log('Failed to fetch user', error)
+		} : null
+	} catch (_error) {
+		console.log('Current user not found')
 		return null
 	}
 })

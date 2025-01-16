@@ -26,6 +26,17 @@ export const partialAuthConfig = {
 		signOut: sitePaths.signOut.href,
 	},
 	callbacks: {
+		jwt: async ({ token, user }) => {
+			if (user) {
+				token.id = user.id
+			}
+			return token
+		},
+		session: async ({ session, token }) => {
+			// TODO better validation
+			session.user.id = (token.id && token.id.toString) ? token.id.toString() : ''
+			return session
+		},
 		// The authorized callback is used to verify if the request is authorized to access a page via Next.js Middleware.
 		authorized({ auth, request: { nextUrl } }) {
 			const isSignedIn = !!auth?.user; // TODO some user, but not necessarily having up-to-date data with DB
