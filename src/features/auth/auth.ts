@@ -5,7 +5,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { signInSchema } from "./validation"
-import { findUserByCredentials } from "../user/user"
+import { verifyUserCredentials } from "../user/user"
 import { partialAuthConfig } from "./auth.config"
 
 
@@ -25,8 +25,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				if (success) {
 					// Credentials are valid according to schema
 					const { email, password } = data
-					const user = await findUserByCredentials({ email, password })
-					return user
+					const verifyRes = await verifyUserCredentials({ email, password })
+					return verifyRes.valid ? verifyRes.user : null
 				} else {
 					// Credentials or whatever user entered doesn't match schema
 					return null
