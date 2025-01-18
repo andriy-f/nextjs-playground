@@ -2,6 +2,7 @@ import { NextAuthConfig } from "next-auth"
 
 import { NextResponse } from "next/server"
 import { sitePaths } from "../shared/sitePaths"
+import { sessionUserSchema } from "./validation"
 
 const protectedRoutes = [
 	sitePaths.dashboard.href,
@@ -26,15 +27,26 @@ export const partialAuthConfig = {
 		signOut: sitePaths.signOut.href,
 	},
 	callbacks: {
+		/** Enhance session data stored to jws cookie */
 		jwt: async ({ token, user }) => {
 			if (user) {
 				token.id = user.id
+				token.name = user.name
 			}
+
 			return token
 		},
+		/** Extract additional session user data from jwt from cookie */
 		session: async ({ session, token }) => {
-			// TODO better validation
-			session.user.id = (token.id && token.id.toString) ? token.id.toString() : ''
+			const sessionUserParseRes = sessionUserSchema.safeParse(token)
+			if (sessionUserParseRes.success) {
+				session.user.id = sessionUserParseRes.data.id
+				session.user.name = sessionUserParseRes.data.name
+			} else {
+				// TODO: maybe throw?
+				console.log('invalid session data', sessionUserParseRes.error)
+			}
+
 			return session
 		},
 		// The authorized callback is used to verify if the request is authorized to access a page via Next.js Middleware.

@@ -2,7 +2,7 @@
 
 import { signIn, signOut } from './auth';
 import { AuthError } from 'next-auth';
-import { signInSchema } from './validation';
+import { userCredentialsSchema } from './validation';
 
 type SignInFormState = {
 	fieldErrors?: {
@@ -20,7 +20,7 @@ export async function signInAction(
 	formData: FormData,
 ): Promise<SignInFormState> {
 	try {
-		const { success, data, error } = await signInSchema.safeParseAsync(Object.fromEntries(formData))
+		const { success, data, error } = await userCredentialsSchema.safeParseAsync(Object.fromEntries(formData))
 		if (success) {
 			await signIn('credentials', data);
 			return {};

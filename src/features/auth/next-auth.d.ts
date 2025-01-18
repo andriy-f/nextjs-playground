@@ -1,5 +1,8 @@
+/**
+ * Next auth library type augmentations
+ */
 import { } from "next-auth"
-import { SessionUser } from '@/features/user/user'
+import { SessionUser } from './types'
 
 declare module "next-auth" {
 	// interface User {

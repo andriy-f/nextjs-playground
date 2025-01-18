@@ -3,8 +3,12 @@ import 'server-only'
 import { auth } from '@/features/auth/auth'
 import { redirect } from 'next/navigation'
 import { cache } from 'react'
-import { CurrentUser, findUser } from '../user/user'
+import { CurrentUser } from '../auth/types'
+import db from '@/db'
 
+/**
+ * Get user data from session token
+ */
 export const requireAuthentication = cache(async () => {
 	const session = await auth()
 
@@ -15,16 +19,37 @@ export const requireAuthentication = cache(async () => {
 	}
 })
 
+/**
+ * Get user data from database (based on user id from session token)
+ */
 export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
 	const user = await requireAuthentication()
 	if (!user) return null
 
 	try {
-		const userFull = await findUser(user.id)
+		const userFromDb = await db.user.findUnique({
+			where: {
+				id: user.id,
+			},
+			select: {
+				id: true,
+				email: true,
+				name: true,
+				roles: {
+					select: {
+						permissions: {
+							select: {
+								code: true,
+							},
+						},
+					},
+				}
+			}
+		})
 
-		return userFull ? {
+		return userFromDb ? {
 			id: user.id,
-			permissions: userFull?.roles.flatMap((role) => role.permissions.map((permission) => permission.code)) ?? [],
+			permissions: userFromDb?.roles.flatMap((role) => role.permissions.map((permission) => permission.code)) ?? [],
 			email: user.email,
 			name: user.name,
 		} : null

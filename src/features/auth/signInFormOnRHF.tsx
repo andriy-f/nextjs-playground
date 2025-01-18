@@ -14,7 +14,7 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { lusitana } from '@/features/shared/ui/fonts';
 import { Button } from '@/features/shared/ui/button';
 import { signIn } from 'next-auth/react'
-import { signInSchema } from '@/features/auth/validation';
+import { userCredentialsSchema } from '@/features/auth/validation';
 import PFormField from '@/shared/ui/PFormField';
 import { useRouter } from 'next/navigation';
 
@@ -27,7 +27,7 @@ export default function SignInFormOnRHF() {
 	const router = useRouter();
 
 	const { register, handleSubmit, formState } = useForm({
-		resolver: zodResolver(signInSchema),
+		resolver: zodResolver(userCredentialsSchema),
 	});
 
 	return (

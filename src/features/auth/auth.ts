@@ -4,7 +4,7 @@
 // This file can be placed anywhere in your project.
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { signInSchema } from "./validation"
+import { userCredentialsSchema } from "./validation"
 import { verifyUserCredentials } from "../user/user"
 import { partialAuthConfig } from "./auth.config"
 
@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			},
 			authorize: async (credentials) => {
 				// TODO: replace with method chaining: validation >>= findUserByCredentials
-				const { success, data } = await signInSchema.safeParseAsync(credentials)
+				const { success, data } = await userCredentialsSchema.safeParseAsync(credentials)
 				if (success) {
 					// Credentials are valid according to schema
 					const { email, password } = data

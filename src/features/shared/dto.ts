@@ -1,8 +1,6 @@
 import 'server-only'
 import { getCurrentUser } from '@/features/shared/dal'
-import { type CurrentUser } from '@/features/user/user'
-
-// type User = Session["user"]
+import { type CurrentUser } from '@/features/auth/types'
 
 function canSeeUsername(_viewer: CurrentUser) {
 	return true
