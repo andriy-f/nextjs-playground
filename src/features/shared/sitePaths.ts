@@ -1,6 +1,6 @@
-export type SitePath = {
+export type PathInfo = {
 	name: string;
-	href: string;
+	path: string;
 	requireAuthentication: boolean;
 	requirePermissions: string[];
 }
@@ -8,44 +8,54 @@ export type SitePath = {
 export const sitePaths = {
 	signIn: {
 		name: 'Sign In',
-		href: '/auth/signin',
+		path: '/auth/signin',
 		requireAuthentication: false,
 		requirePermissions: []
 	},
 	signOut: {
 		name: 'Sign Out',
-		href: '/auth/signout',
+		path: '/auth/signout',
 		requireAuthentication: true,
 		requirePermissions: []
 	},
 	home: {
 		name: 'Home',
-		href: '/',
+		path: '/',
 		requireAuthentication: false,
 		requirePermissions: []
 	},
 	dashboard: {
 		name: 'Dashboard',
-		href: '/dashboard',
+		path: '/dashboard',
 		requireAuthentication: true,
 		requirePermissions: []
 	},
 	profile: {
 		name: 'Profile',
-		href: '/profile',
+		path: '/profile',
 		requireAuthentication: true,
 		requirePermissions: []
 	},
 	todo: {
 		name: 'Todo',
-		href: '/todo-list',
+		path: '/todo-list',
 		requireAuthentication: true,
 		requirePermissions: ['todo:view']
 	},
 	inactivityDetector: {
 		name: 'Inactivity Detector',
-		href: '/inactivity-detector',
+		path: '/inactivity-detector',
 		requireAuthentication: false,
 		requirePermissions: []
 	},
-} satisfies { [key: string]: SitePath }
+} satisfies { [key: string]: PathInfo }
+
+/**
+ * 
+ * @param relPath Relative path ('/dashboard' for example)
+ * @returns 
+ */
+export const getPathInfo = (relPath: string): PathInfo | null => {
+	const pageInfo = Object.values(sitePaths).find(page => relPath.startsWith(page.path));
+	return pageInfo || null;
+}

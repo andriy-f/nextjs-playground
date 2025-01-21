@@ -6,8 +6,8 @@ import Link from 'next/link'
 import { sitePaths } from '../shared/sitePaths';
 
 const profileLinks = [
-	{ name: sitePaths.profile.name, href: sitePaths.profile.href },
-	{ name: sitePaths.signOut.name, href: sitePaths.signOut.href },
+	{ name: sitePaths.profile.name, href: sitePaths.profile.path },
+	{ name: sitePaths.signOut.name, href: sitePaths.signOut.path },
 ]
 
 const ProfileButton: React.FC = () => {

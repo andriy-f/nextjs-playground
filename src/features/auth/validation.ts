@@ -13,4 +13,5 @@ export const sessionUserSchema = z.object({
 	id: z.string(),
 	email: z.string(),
 	name: z.string().nullable(),
+	permissions: z.array(z.string()),
 })
