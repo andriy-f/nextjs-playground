@@ -8,6 +8,7 @@ const seedPermissions = async () => {
 		data: [
 			{ code: permissions.todoEdit },
 			{ code: permissions.todoView },
+			{ code: permissions.canSeeDashboard },
 		],
 		skipDuplicates: true,
 	})
@@ -21,6 +22,7 @@ const seedRoles = async () => {
 				connect: [
 					{ code: permissions.todoEdit },
 					{ code: permissions.todoView },
+					{ code: permissions.canSeeDashboard },
 				],
 			},
 		},
@@ -30,6 +32,7 @@ const seedRoles = async () => {
 				connect: [
 					{ code: permissions.todoEdit },
 					{ code: permissions.todoView },
+					{ code: permissions.canSeeDashboard },
 				],
 			},
 		},
@@ -41,6 +44,7 @@ const seedRoles = async () => {
 			permissions: {
 				connect: [
 					{ code: permissions.todoView },
+					{ code: permissions.canSeeDashboard },
 				],
 			},
 		},
@@ -49,6 +53,7 @@ const seedRoles = async () => {
 			permissions: {
 				connect: [
 					{ code: permissions.todoView },
+					{ code: permissions.canSeeDashboard },
 				],
 			},
 		},

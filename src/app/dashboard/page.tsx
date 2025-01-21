@@ -1,9 +1,10 @@
 import NotAuthorized from '@/features/auth/NotAuthorized'
+import { permissions } from '@/features/auth/permissions'
 import { viewerHasPermissions } from '@/features/shared/dal'
 
 const Page = async () => {
 	// todo move auth check to middleware 
-	const isAuthorized = await viewerHasPermissions(['canSeeDashboard'])
+	const isAuthorized = await viewerHasPermissions([permissions.canSeeDashboard])
 
 	return isAuthorized ? (
 		<div>
