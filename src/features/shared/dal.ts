@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { cache } from 'react'
 import { CurrentUser } from '../auth/types'
 import db from '@/db'
+import { sitePaths } from './sitePaths'
 
 /**
  * Get user data from session token
@@ -13,7 +14,7 @@ export const requireAuthentication = cache(async () => {
 	const session = await auth()
 
 	if (!session?.user) {
-		redirect('/login')
+		redirect(sitePaths.signIn.path)
 	} else {
 		return session.user
 	}
