@@ -8,6 +8,12 @@ import { userCredentialsSchema } from "./validation"
 import { verifyUserCredentials } from "../user/user"
 import { partialAuthConfig } from "./auth.config"
 
+const parseUserCredentials = async (credentials: unknown) => userCredentialsSchema.parseAsync(credentials)
+
+const authorize = (credentials: unknown) =>
+	parseUserCredentials(credentials)
+		.then(verifyUserCredentials)
+		.then((verifyRes) => verifyRes.valid ? verifyRes.user : null)
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	...partialAuthConfig,
@@ -19,19 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				email: {},
 				password: {},
 			},
-			authorize: async (credentials) => {
-				// TODO: replace with method chaining: validation >>= findUserByCredentials
-				const { success, data } = await userCredentialsSchema.safeParseAsync(credentials)
-				if (success) {
-					// Credentials are valid according to schema
-					const { email, password } = data
-					const verifyRes = await verifyUserCredentials({ email, password })
-					return verifyRes.valid ? verifyRes.user : null
-				} else {
-					// Credentials or whatever user entered doesn't match schema
-					return null
-				}
-			}
+			authorize: authorize,
 		}),
 	],
 })
