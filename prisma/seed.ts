@@ -5,11 +5,7 @@ const prisma = new PrismaClient()
 
 const seedPermissions = async () => {
 	await prisma.permission.createMany({
-		data: [
-			{ code: permissions.todoEdit },
-			{ code: permissions.todoView },
-			{ code: permissions.canSeeDashboard },
-		],
+		data: Object.values(permissions).map(permCode => ({ code: permCode })),
 		skipDuplicates: true,
 	})
 }
