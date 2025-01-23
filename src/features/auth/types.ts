@@ -12,3 +12,7 @@ export interface CurrentUser {
 	permissions: string[];
 }
 
+export type UserCredentials = {
+	email: string,
+	password: string
+} 
