@@ -1,39 +1,42 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
-import stylistic from '@stylistic/eslint-plugin'
+import eslint from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+// import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+import { defineConfig } from 'eslint/config';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all
-});
-
-const eslintConfig = [
-	...compat.extends("next/core-web-vitals", "next/typescript"),
+export default defineConfig([
+	// eslint.configs.recommended,
+	// tseslint.configs.recommended,
 	{
-		plugins: {
-			'@stylistic': stylistic
+		files: ['**/*.{ts,tsx}'],
+		extends: [
+			eslint.configs.recommended,
+			tseslint.configs.recommended,
+			reactHooks.configs['recommended-latest'],
+			// reactRefresh.configs.recommended,
+		],
+		languageOptions: {
+			ecmaVersion: 2020,
+			globals: globals.browser,
 		},
-		"rules": {
-			"@typescript-eslint/no-unused-vars": [
-				"error",
-				{
-					"args": "all",
-					"argsIgnorePattern": "^_",
-					"caughtErrors": "all",
-					"caughtErrorsIgnorePattern": "^_",
-					"destructuredArrayIgnorePattern": "^_",
-					"varsIgnorePattern": "^_",
-					"ignoreRestSiblings": true
-				}
-			],
-			'@stylistic/indent': ['warn', 'tab'],
+	},
+	{
+		rules: {
+			"@typescript-eslint/no-unused-vars": ["error", {
+				argsIgnorePattern: "^_",
+				varsIgnorePattern: "^_",
+				caughtErrorsIgnorePattern: "^_",
+			}],
 		}
-	}
-];
-
-export default eslintConfig
+	},
+	{
+		ignores: [
+			"node_modules/**",
+			".next/**",
+			"out/**",
+			"build/**",
+			"next-env.d.ts",
+		],
+	},
+])

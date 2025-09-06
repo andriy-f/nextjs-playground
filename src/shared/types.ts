@@ -25,10 +25,11 @@ const getArea = (shape: Shape2D) => {
 			return shape.side1 * shape.side2
 		case 'square':
 			return shape.side ** 2
-		default:
+		default: {
 			// exhaustiveness check
 			const _: never = shape
 			throw new Error('this will not compile anyway')
+		}
 	}
 }
 
@@ -97,6 +98,6 @@ export function proxiedPropertiesOf<TObj>(_?: TObj) {
 			throw Error('Set not supported');
 		},
 	}) as {
-		[P in keyof TObj]: P;
-	};
+			[P in keyof TObj]: P;
+		};
 }

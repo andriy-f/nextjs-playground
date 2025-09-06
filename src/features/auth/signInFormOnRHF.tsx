@@ -42,7 +42,7 @@ export default function SignInFormOnRHF() {
 				.then((signInResp) => {
 					console.log('si r', signInResp)
 					switch (signInResp?.error) {
-						case null:
+						case null: {
 							// sign in successful, so redirect to callbackUrl page or root
 							setErrorMessage(null);
 							const { url } = signInResp
@@ -58,6 +58,7 @@ export default function SignInFormOnRHF() {
 								}
 							}
 							break;
+						}
 						case 'CredentialsSignin':
 							setErrorMessage('Invalid credentials.');
 							break;
