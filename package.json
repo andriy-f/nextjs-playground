@@ -26,7 +26,7 @@
 		"formik": "^2.4.6",
 		"next": "^15.5.2",
 		"next-auth": "5.0.0-beta.29",
-		"ramda": "^0.30.1",
+		"ramda": "^0.31.3",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
 		"react-hook-form": "^7.62.0",
