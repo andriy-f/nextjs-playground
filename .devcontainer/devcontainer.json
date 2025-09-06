@@ -5,14 +5,24 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	// "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
 	"dockerFile": "Dockerfile",
+	"runArgs": [
+		"--userns=keep-id:uid=1000,gid=1000"
+	],
+	// Create folder on your local system for pnpm store and set env var $MY_PNPM_STORE_PATH to that folder's path
+	"mounts": [
+		{
+			"source": "${localEnv:MY_PNPM_STORE_PATH}",
+			"target": "${containerWorkspaceFolder}/.pnpm-store",
+			"type": "bind"
+		}
+	],
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "corepack install && pnpm install",
 	// Configure tool-specific properties.
-	// "customizations": {},
 	"customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
