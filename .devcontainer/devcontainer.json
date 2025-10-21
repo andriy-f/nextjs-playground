@@ -1,41 +1,38 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "NextJS Playground",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	// "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
-	"dockerFile": "Dockerfile",
-	"runArgs": [
-		"--userns=keep-id:uid=1000,gid=1000"
-	],
-	// Create folder on your local system for pnpm store and set env var $MY_PNPM_STORE_PATH to that folder's path
-	"mounts": [
-		{
-			"source": "${localEnv:MY_PNPM_STORE_PATH}",
-			"target": "${containerWorkspaceFolder}/.pnpm-store",
-			"type": "bind"
-		}
-	],
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "corepack install && pnpm install && pnpm exec prisma generate && pnpm exec next telemetry disable",
-	// Configure tool-specific properties.
-	"customizations": {
-		// Configure properties specific to VS Code.
-		"vscode": {
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"streetsidesoftware.code-spell-checker",
-				"bradlc.vscode-tailwindcss",
-				"GitHub.copilot",
-				"ms-azuretools.vscode-docker",
-				"Prisma.prisma"
-			]
-		}
-	},
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+    "name": "NextJS Playground",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+    "dockerFile": "Dockerfile",
+    // Create folder on your local system for pnpm store and set env var $MY_PNPM_STORE_PATH to that folder's path
+    "mounts": [
+        {
+            "source": "${localEnv:MY_PNPM_STORE_PATH}",
+            "target": "${containerWorkspaceFolder}/.pnpm-store",
+            "type": "bind"
+        }
+    ],
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {},
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "corepack install && pnpm install && pnpm exec prisma generate && pnpm exec next telemetry disable",
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+                "bradlc.vscode-tailwindcss",
+                "GitHub.copilot",
+                "ms-azuretools.vscode-docker",
+                "Prisma.prisma"
+            ]
+        }
+    },
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
 }
