@@ -1,5 +1,6 @@
 FROM node:22-bookworm-slim as base
-ARG APP_ROOT=/app
+ARG APP_ROOT=/home/node/app
+ENV APP_ROOT=${APP_ROOT}
 # RUN set -ex; \
 #     apt-get update -y; \
 #     apt-get install -y openssl
@@ -8,35 +9,46 @@ RUN apt-get update && apt-get install -y \
     openssl \
     && rm -rf /var/lib/apt/lists/*
 
+RUN npm uninstall -g yarn pnpm \
+    && npm install -g corepack@latest
+
+USER node
+
+ENV MY_BIN_DIR=/home/node/bin
+RUN mkdir -p $MY_BIN_DIR
+ENV PATH=$PATH:$MY_BIN_DIR
+
+RUN corepack enable --install-directory $MY_BIN_DIR pnpm \
+    && corepack install -g pnpm@latest-10
+
 # =====================================
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR ${APP_ROOT}
 
-# Install dependencies 
-COPY package.json package-lock.json ./
-ENV NODE_ENV=development
-RUN npm ci;
+# Fetch packaged
+COPY --chown=node:node pnpm-lock.yaml pnpm-workspace.yaml ./
+# RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm fetch
+RUN pnpm fetch
 
 
 # ========================================
 # Rebuild the source code only when needed
-FROM base AS builder
-ARG APP_ROOT=/app
+FROM deps AS builder
 WORKDIR ${APP_ROOT}
-COPY --from=deps ${APP_ROOT}/node_modules ./node_modules
-COPY . .
+# COPY --from=deps ${APP_ROOT}/node_modules ./node_modules
+COPY --chown=node:node . .
 
 # Disables telemetry Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npx prisma generate
-RUN npm run build
+RUN pwd && ls -la
+RUN pnpm exec prisma generate
+RUN pnpm run build
 
 # =================================================
 # Production image, copy all the files and run next
 FROM base AS runner
-ARG APP_ROOT=/app
 WORKDIR ${APP_ROOT}
 
 ENV NODE_ENV=production
@@ -47,8 +59,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 COPY --from=builder ${APP_ROOT}/public ./public
 
 # Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown node:node .next
+# RUN mkdir .next
+# RUN chown node:node .next
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing

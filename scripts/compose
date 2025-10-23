@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# Use container engine specified in CONTAINER_ENGINE environment variable or system one, trying first podman, then Docker.
+if [ -n "${CONTAINER_ENGINE}" ]; then
+  if [ $(command -v ${CONTAINER_ENGINE}) ]; then
+    MY_CONTAINER_ENGINE=${CONTAINER_ENGINE}
+    echo "Using container engine: ${MY_CONTAINER_ENGINE}"
+  else
+    echo "Wrong container engine specified ${CONTAINER_ENGINE}";
+    exit 1;
+  fi
+elif [ $(command -v podman) ]; then
+  echo "Using container engine: podman";
+  MY_CONTAINER_ENGINE=podman;
+elif [ $(command -v docker) ]; then
+  echo "Using container engine: docker";
+  MY_CONTAINER_ENGINE=docker;
+else
+  echo "No container engine found. Please install Podman or Docker.";
+  exit 1;
+fi
+
+if [ -n "${COMPOSE_ENGINE}" ]; then
+  if command -v ${COMPOSE_ENGINE}; then
+    MY_COMPOSE_ENGINE=${COMPOSE_ENGINE};
+    echo "Using compose engine: ${MY_COMPOSE_ENGINE}";
+  else
+    echo "Wrong compose engine specified ${COMPOSE_ENGINE}";
+    exit 1;
+  fi
+elif command -v podman-compose; then
+  echo "Using compose engine: podman-compose"
+  MY_COMPOSE_ENGINE=podman-compose;
+elif docker compose version; then
+  echo "Using compose engine: docker compose";
+  MY_COMPOSE_ENGINE="docker-compose";
+else
+  echo "No compose engine found. Please install podman-compose or docker-compose."
+  exit 1;
+fi
+
+if [ "${MY_CONTAINER_ENGINE}" = "podman" ]; then
+  if [ "${MY_COMPOSE_ENGINE}" = "podman-compose" ]; then
+    COMPOSE_CMD="env PODMAN_COMPOSE_PROVIDER=$MY_COMPOSE_ENGINE podman compose";
+  else
+    # Try autodetect compose engine
+    # most likely it's docker-compose or docker compose and it's requring socket
+    systemctl --user start podman.socket
+    COMPOSE_CMD="podman compose";
+  fi
+elif [ "${MY_CONTAINER_ENGINE}" = "docker" ]; then
+  if [ "${MY_COMPOSE_ENGINE}" = "docker-compose" ]; then
+    COMPOSE_CMD="docker compose";
+  else
+    echo "docker only supports docker compose as compose engine";
+    exit 1;
+  fi
+else
+  echo "Unsupported container engine ${MY_CONTAINER_ENGINE}";
+  exit 1;
+fi
+
+${COMPOSE_CMD} "$@"
