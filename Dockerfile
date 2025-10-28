@@ -42,7 +42,7 @@ COPY --chown=node:node . .
 # Disables telemetry Learn more here: https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN pwd && ls -la
+RUN pnpm install -r --offline 
 RUN pnpm exec prisma generate
 RUN pnpm run build
 
@@ -54,7 +54,7 @@ WORKDIR ${APP_ROOT}
 ENV NODE_ENV=production
 
 # Disables telemetry Learn more here: https://nextjs.org/telemetry
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=builder ${APP_ROOT}/public ./public
 
