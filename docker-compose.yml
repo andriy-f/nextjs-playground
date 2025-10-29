@@ -20,6 +20,9 @@ services:
           # initial_sync: true
           ignore:
             - node_modules/
+        - action: sync
+          path: ./prisma
+          target: /home/node/app/prisma
         - action: rebuild
           path: package.json
     env_file:
