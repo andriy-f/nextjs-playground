@@ -4,9 +4,14 @@ services:
       context: .
       dockerfile: Dockerfile
       target: builder
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    # userns_mode: "keep-id:uid=33,gid=33"
+    userns_mode: "keep-id"
     volumes:
-      - ${PWD}/src:/app/src:ro
-      - ${PWD}/.env:/app/.env:ro
+      - ${PWD}/src:/home/node/app/src:Z
+      - ${PWD}/.env:/home/node/app/.env:Z
     networks:
       - backnet
 
