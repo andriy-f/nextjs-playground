@@ -9,9 +9,21 @@ services:
     restart: unless-stopped
     # userns_mode: "keep-id:uid=33,gid=33"
     userns_mode: "keep-id"
-    volumes:
-      - ${PWD}/src:/home/node/app/src:Z
-      - ${PWD}/.env:/home/node/app/.env:Z
+    # volumes:
+    # - ${PWD}/src:/home/node/app/src:Z
+    # - ${PWD}/.env:/home/node/app/.env:Z
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /home/node/app/src
+          # initial_sync: true
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    env_file:
+      - ./.env
     networks:
       - backnet
 
@@ -30,6 +42,8 @@ services:
   adminer:
     image: adminer
     restart: unless-stopped
+    ports:
+      - "8080:8080"
     networks:
       - backnet
 
