@@ -46,6 +46,8 @@ RUN pnpm install -r --offline
 RUN pnpm exec prisma generate
 RUN pnpm run build
 
+CMD [ "node_modules/.bin/next", "dev" ]
+
 # =================================================
 # Production image, copy all the files and run next
 FROM base AS runner
