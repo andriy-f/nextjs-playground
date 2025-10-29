@@ -1,121 +1,118 @@
 import { PrismaClient } from '@prisma/client'
 import { permissions } from '../src/features/auth/permissions'
+import { auth } from '../src/auth'
 
 const prisma = new PrismaClient()
 
 const seedPermissions = async () => {
-	await prisma.permission.createMany({
-		data: Object.values(permissions).map(permCode => ({ code: permCode })),
-		skipDuplicates: true,
-	})
+    await prisma.permission.createMany({
+        data: Object.values(permissions).map(permCode => ({ code: permCode })),
+        skipDuplicates: true,
+    })
 }
 
 const seedRoles = async () => {
-	await prisma.role.upsert({
-		where: { name: 'admin' },
-		update: {
-			permissions: {
-				connect: [
-					{ code: permissions.todoEdit },
-					{ code: permissions.todoView },
-					{ code: permissions.canSeeDashboard },
-				],
-			},
-		},
-		create: {
-			name: 'admin',
-			permissions: {
-				connect: [
-					{ code: permissions.todoEdit },
-					{ code: permissions.todoView },
-					{ code: permissions.canSeeDashboard },
-				],
-			},
-		},
-	})
+    const adminRole = {
+        name: 'admin',
+        permissions: {
+            connect: [
+                { code: permissions.todoEdit },
+                { code: permissions.todoView },
+                { code: permissions.canSeeDashboard },
+            ],
+        },
+    }
+    await prisma.role.upsert({
+        where: { name: adminRole.name },
+        update: adminRole,
+        create: adminRole,
+    })
 
-	await prisma.role.upsert({
-		where: { name: 'user' },
-		update: {
-			permissions: {
-				connect: [
-					{ code: permissions.todoView },
-					{ code: permissions.canSeeDashboard },
-				],
-			},
-		},
-		create: {
-			name: 'user',
-			permissions: {
-				connect: [
-					{ code: permissions.todoView },
-					{ code: permissions.canSeeDashboard },
-				],
-			},
-		},
-	})
+    const userRole = {
+        name: 'user',
+        permissions: {
+            connect: [
+                { code: permissions.todoView },
+                { code: permissions.canSeeDashboard },
+            ],
+        },
+    }
+
+    await prisma.role.upsert({
+        where: { name: userRole.name },
+        update: userRole,
+        create: userRole,
+    })
 }
 
 const seedUsers = async () => {
-	const passHash1 = '$2b$10$eYijkbhGJg4C/D0YRHABqedX/J0cMCYpXUmYpA1vdYs1CQNXlo.UK'
+    const bobUser = {
+        name: 'Bob Admin',
+        email: 'bob@example.com',
+        password: 'haribolB2',
+    }
 
-	await prisma.user.upsert({
-		where: { email: 'bob@example.com' },
-		update: {
-			passwordHash: passHash1,
-			roles: {
-				connect: [
-					{ name: 'admin' }
-				]
-			},
-		},
-		create: {
-			email: 'bob@example.com',
-			passwordHash: passHash1,
-			roles: {
-				connect: [
-					{ name: 'admin' }
-				]
-			},
-		}
-	})
+    if (!await prisma.user.findUnique({ where: { email: bobUser.email } })) {
+        await auth.api.signUpEmail({
+            body: bobUser
+        });
 
-	const passHash2 = '$2b$10$BEe2iLDMmcWvmjjR34GP0.MeZhoi0ax3Trc9L.BqFrEaHYymuIuea'
-	await prisma.user.upsert({
-		where: { email: 'alice@example.com' },
-		update: {
-			passwordHash: passHash2,
-			roles: {
-				connect: [
-					{ name: 'user' }
-				]
-			},
-		},
-		create: {
-			email: 'alice@example.com',
-			passwordHash: passHash2,
-			roles: {
-				connect: [
-					{ name: 'user' }
-				]
-			},
-		}
-	})
+        await prisma.user.update({
+            where: { email: bobUser.email },
+            data: {
+                roles: {
+                    connect: [
+                        { name: 'admin' }
+                    ]
+                },
+            },
+        });
+    }
+
+
+    const aliceUser = {
+        name: 'Alice User',
+        email: 'alice@example.com',
+        password: 'haribolA1',
+        roles: {
+            connect: [
+                { name: 'user' }
+            ]
+        }
+    }
+
+    if (!await prisma.user.findUnique({ where: { email: aliceUser.email } })) {
+        await auth.api.signUpEmail({
+            body: aliceUser
+        });
+
+        await prisma.user.update({
+            where: { email: aliceUser.email },
+            data: {
+                roles: {
+                    connect: [
+                        { name: 'user' }
+                    ]
+                },
+            },
+        });
+    }
+
 }
 
 async function seedAll() {
-	await seedPermissions()
-	await seedRoles()
-	await seedUsers()
+    await seedPermissions()
+    await seedRoles()
+    await seedUsers()
 
 }
 
 seedAll()
-	.then(async () => {
-		await prisma.$disconnect()
-	})
-	.catch(async (e) => {
-		console.error(e)
-		await prisma.$disconnect()
-		process.exit(1)
-	})
+    .then(async () => {
+        await prisma.$disconnect()
+    })
+    .catch(async (e) => {
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+    })
