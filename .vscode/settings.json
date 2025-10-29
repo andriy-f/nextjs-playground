@@ -1,16 +1,17 @@
 {
-	"cSpell.words": [
-		"fluture",
-		"Formik",
-		"Lusitana",
-		"nextjs",
-		"proxied",
-		"tailwindcss",
-		"todos"
-	],
-	"editor.detectIndentation": false,
-	"eslint.format.enable": true,
-	"[typescript]": {
-		"editor.defaultFormatter": "vscode.typescript-language-features"
-	}
+    "cSpell.words": [
+        "fluture",
+        "Formik",
+        "Kysely",
+        "Lusitana",
+        "nextjs",
+        "proxied",
+        "tailwindcss",
+        "todos"
+    ],
+    "editor.detectIndentation": false,
+    "eslint.format.enable": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
 }
