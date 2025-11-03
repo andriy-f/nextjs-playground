@@ -9,6 +9,8 @@ services:
     restart: unless-stopped
     # userns_mode: "keep-id:uid=33,gid=33"
     userns_mode: "keep-id"
+    depends_on:
+      - db
     # volumes:
     # - ${PWD}/src:/home/node/app/src:Z
     # - ${PWD}/.env:/home/node/app/.env:Z
@@ -45,6 +47,8 @@ services:
   adminer:
     image: adminer
     restart: unless-stopped
+    depends_on:
+      - db
     ports:
       - "8080:8080"
     networks:
