@@ -12,8 +12,8 @@ services:
         depends_on:
             - db
         volumes:
-            - ${PWD}/src:/home/node/app/src:z
-            - ${PWD}/.env:/home/node/app/.env:z
+            - ${PWD}/src:/home/node/app/src:z,ro
+            - ${PWD}/.env:/home/node/app/.env:z,ro
             # develop:
             #   watch:
             #     - action: sync
