@@ -1,62 +1,62 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: builder
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-    # userns_mode: "keep-id:uid=33,gid=33"
-    userns_mode: "keep-id"
-    depends_on:
-      - db
-    # volumes:
-    # - ${PWD}/src:/home/node/app/src:Z
-    # - ${PWD}/.env:/home/node/app/.env:Z
-    develop:
-      watch:
-        - action: sync
-          path: ./src
-          target: /home/node/app/src
-          # initial_sync: true
-          ignore:
-            - node_modules/
-        - action: sync
-          path: ./prisma
-          target: /home/node/app/prisma
-        - action: rebuild
-          path: package.json
-    env_file:
-      - ./.env
-    networks:
-      - backnet
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: builder
+        ports:
+            - "3000:3000"
+        restart: unless-stopped
+        # userns_mode: "keep-id:uid=33,gid=33"
+        userns_mode: "keep-id"
+        depends_on:
+            - db
+        volumes:
+            - ${PWD}/src:/home/node/app/src:z
+            - ${PWD}/.env:/home/node/app/.env:z
+            # develop:
+            #   watch:
+            #     - action: sync
+            #       path: ./src
+            #       target: /home/node/app/src
+            #       # initial_sync: true
+            #       ignore:
+            #         - node_modules/
+            #     - action: sync
+            #       path: ./prisma
+            #       target: /home/node/app/prisma
+            #     - action: rebuild
+            #       path: package.json
+        env_file:
+            - ./.env
+        networks:
+            - backnet
 
-  db:
-    image: postgres:16
-    restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: postgre108
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-    networks:
-      - backnet
+    db:
+        image: postgres:16
+        restart: unless-stopped
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: postgre108
+            POSTGRES_USER: postgres
+            POSTGRES_DB: postgres
+        networks:
+            - backnet
 
-  adminer:
-    image: adminer
-    restart: unless-stopped
-    depends_on:
-      - db
-    ports:
-      - "8080:8080"
-    networks:
-      - backnet
+    adminer:
+        image: adminer
+        restart: unless-stopped
+        depends_on:
+            - db
+        ports:
+            - "8080:8080"
+        networks:
+            - backnet
 
 volumes:
-  postgres-data:
+    postgres-data:
 
 
 networks:
-  backnet:
+    backnet:
