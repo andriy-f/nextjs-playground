@@ -41,7 +41,7 @@ fi
 
 if [ "${MY_CONTAINER_ENGINE}" = "podman" ]; then
   if [ "${MY_COMPOSE_ENGINE}" = "podman-compose" ]; then
-    COMPOSE_CMD="env PODMAN_COMPOSE_PROVIDER=$MY_COMPOSE_ENGINE podman compose";
+    COMPOSE_CMD="env PODMAN_COMPOSE_PROVIDER=$MY_COMPOSE_ENGINE podman compose --in-pod=False";
   else
     # Try autodetect compose engine
     # most likely it's docker-compose or docker compose and it's requring socket
