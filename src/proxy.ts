@@ -16,7 +16,7 @@ import { sitePaths } from "./features/shared/sitePaths"
 // Use the file middleware.ts (or .js) in the root of your project to define Middleware. 
 // For example, at the same level as pages or app, or inside src if applicable.
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
     // THIS IS NOT SECURE!
     // This is the recommended approach to optimistically redirect users
