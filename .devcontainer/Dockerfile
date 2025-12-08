@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+FROM mcr.microsoft.com/devcontainers/javascript-node:24-trixie
 
 USER root
 
 RUN npm uninstall -g yarn pnpm \
-	&& npm install -g corepack@latest
+    && npm install -g corepack@latest
 
 USER node
 
@@ -12,4 +12,4 @@ RUN mkdir -p $MY_BIN_DIR
 ENV PATH=$PATH:$MY_BIN_DIR
 
 RUN corepack enable --install-directory $MY_BIN_DIR pnpm \
-	&& corepack install -g pnpm@latest-10
+    && corepack install -g pnpm@latest-10
