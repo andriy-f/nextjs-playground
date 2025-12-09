@@ -1,4 +1,4 @@
-FROM node:22-bookworm-slim as base
+FROM node:24-trixie-slim as base
 ARG APP_ROOT=/home/node/app
 ENV APP_ROOT=${APP_ROOT}
 # RUN set -ex; \
